@@ -68,7 +68,7 @@ app.post('/signin', (req, res) => {
             req.session.error = "No user exist for this email"
             res.redirect('/signin')
           } else {
-            bcrypt(password, result.rowa[0].password, (error, isMatch) => {
+            bcrypt.compare(password, result.rows[0].password, (error, isMatch) => {
               if (isMatch) {
                 const id = result.rows[0].id
                 const token = jwt.sign({ id }, process.env.NODE_JWT_SECRET, {
@@ -98,6 +98,10 @@ app.post('/signin', (req, res) => {
 
 app.get('/signin', (req, res) => {
   res.send(req.session.error)
+})
+
+app.post('/test', (req, res) => {
+  res.redirect('/signin')
 })
 // ----------------------/SIGN IN----------------------
 
@@ -129,19 +133,21 @@ app.post('/signup', (req, res) => {
         res.redirect("/signup")
       } else {
         pool.connect((errPool, db) => {
-          "INSERT INTO users (f_name, l_name, email, password) VALUES ($1, $2, $3, $4)",
-            [firstName, lastName, email, password],
-            (errInsert, result) => {
-              if (errInsert) {
-                console.log("ERROR IN INSERT");
-                console.log(errInsert);
-                req.session.error = "Some error in insert"
-                res.redirect("/signup")
-              } else {
-                console.log("USER ADDED");
-                res.redirect("/")
+          db.query(
+            "INSERT INTO users (f_name, l_name, email, password) VALUES ($1, $2, $3, $4)",
+              [firstName, lastName, email, hash],
+              (errInsert, result) => {
+                if (errInsert) {
+                  console.log("ERROR IN INSERT");
+                  console.log(errInsert);
+                  req.session.error = "Some error in insert"
+                  res.redirect("/signup")
+                } else {
+                  console.log("USER ADDED");
+                  res.redirect("/signin")
+                }
               }
-            }
+          )
         })
       }
     })

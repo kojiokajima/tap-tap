@@ -17,6 +17,13 @@ const SignUp = () => {
     })
   }, [])
 
+  // const test = () => {
+  //   console.log("Yo Clicked");
+  //   axios.post("/test").then((response) => {
+  //     console.log(response);
+  //   })
+  // }
+
   return (
     <SignInOutContainer>
       <SignInOutHero></SignInOutHero>
@@ -40,6 +47,7 @@ const SignUp = () => {
           <Link to="/signin" >already have an account?</Link>
         </form>
       </SignInOutForm>
+      {/* <PrimaryButton label={"go to sign in"} onClick={test} /> */}
     </SignInOutContainer>
   )
 }
