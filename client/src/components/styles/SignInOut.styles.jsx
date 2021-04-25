@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const SignInOutContainer = styled.div`
   display: flex;
@@ -18,15 +18,18 @@ export const SignInOutHero = styled.div`
 `;
 
 export const SignInOutForm = styled.div`
-position: relative;
-width: 50vw;
-& form {
+  position: relative;
+  width: 50vw;
+  // display: flex;
+  // justify-content: space-around;
+  // align-items: center;
+  & form {
     padding: 10vh 5vw;
     position: relative;
     border: 1px solid #000;
     // width: 100%;
-    height: 100vh;
-    padding: 5rem;
+    height: 80vh;
+    // padding: 5rem;
   }
 `;
 

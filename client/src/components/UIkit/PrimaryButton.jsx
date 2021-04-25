@@ -6,7 +6,7 @@ import styled from 'styled-components'
 const PrimaryButton = ({label, onClick}) => {
   return (
     <div>
-      <MyButton onClick={onClick} >{label}</MyButton>
+      <MyButton onClick={onClick} type="submit" >{label}</MyButton>
     </div>
   )
 }

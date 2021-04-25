@@ -30,9 +30,9 @@ const SignIn = () => {
         <form action="/signin" method="post">
           <ErrorMessage>{error}</ErrorMessage>
 
-          <PrimaryTextInput icon={"email"} label={"Email"} />
+          <PrimaryTextInput icon={"email"} label={"Email"} name={"email"} />
           <br/><br/>
-          <PrimaryTextInput icon={"password"} label={"Password"} />
+          <PrimaryTextInput icon={"password"} label={"Password"} name={"password"} type={"password"} />
           <br/><br/><br/><br/>
           <PrimaryButton label={"Sign In"} onClick={() => {console.log("HOHO")}} />
           <br/><br/>

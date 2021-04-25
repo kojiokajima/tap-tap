@@ -3,7 +3,7 @@ import { TextField, Icon, Grid } from "@material-ui/core";
 import { PersonOutline, MailOutline, LockOutlined } from "@material-ui/icons";
 import styled from "styled-components";
 
-const PrimaryTextInput = ({ icon = "", label = "hello" }) => {
+const PrimaryTextInput = ({ icon = "", label, name, type="" }) => {
   const [iconComponent, setIconComponent] = useState(<></>);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const PrimaryTextInput = ({ icon = "", label = "hello" }) => {
     <Grid container spacing={1} alignItems="flex-end" justify="center" >
       <Grid item>{iconComponent}</Grid>
       <Grid item style={{width: '70%'}}>
-        <MyTextField label={label} />
+        <MyTextField label={label} name={name} type={type} />
       </Grid>
     </Grid>
   );
