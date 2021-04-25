@@ -81,6 +81,7 @@ app.post('/signin', (req, res) => {
                 req.session.lastName = result.rows[0].l_name
                 req.session.email = result.rows[0].email
                 req.session.uid = result.rows[0].id
+                // req.session.image = 
 
                 res.redirect('/dashboard/' + req.session.uid)
               } else {
@@ -158,6 +159,27 @@ app.get("/signup", (req, res) => {
   res.send(req.session.error)
 })
 // ----------------------/SIGN UP----------------------
+
+
+// ----------------------USER AUTH----------------------
+app.get("/userAuth", (req, res) => {
+  if(req.session.loggedIn) {
+    res.send({
+      uid: req.session.uid,
+      firstName: req.session.firstName,
+      lastName: req.session.lastName,
+      email: req.session.email,
+      loggedIn: true
+    })
+  } else {
+    res.send({
+      loggedIn: false
+    })
+  }
+})
+// ----------------------/USER AUTH----------------------
+
+
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'))

@@ -33,7 +33,7 @@ const SignIn = () => {
           <br/><br/>
           <PrimaryTextInput icon={"password"} label={"Password"} name={"password"} type={"password"} />
           <br/><br/><br/><br/>
-          <PrimaryButton label={"Sign In"} onClick={() => {console.log("HOHO")}} />
+          <PrimaryButton label={"Sign In"} />
           <br/><br/>
           <Link to="/signup" >don't have an account yet?</Link>
         </form>
