@@ -1,15 +1,21 @@
 import React from 'react';
+import {BrowserRouter} from 'react-router-dom'
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+import {StylesProvider} from '@material-ui/styles'
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <StylesProvider injectFirst>
+            <App />
+        </StylesProvider>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,5 +1,8 @@
 {
-  "proxy": "http://localhost:3000",
+  "scripts": {
+    "start": "node server/index.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
