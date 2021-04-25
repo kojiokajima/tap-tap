@@ -1,0 +1,39 @@
+import styled from 'styled-components'
+
+export const SignInOutContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+
+export const SignInOutHero = styled.div`
+  border: 1px solid #000;
+  width: 50vw;
+  height: 100vh;
+  & img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+`;
+
+export const SignInOutForm = styled.div`
+position: relative;
+width: 50vw;
+& form {
+    padding: 10vh 5vw;
+    position: relative;
+    border: 1px solid #000;
+    // width: 100%;
+    height: 100vh;
+    padding: 5rem;
+  }
+`;
+
+export const ErrorMessage = styled.div`
+  position: absolute;
+  color: red;
+  top: 7%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
