@@ -2,17 +2,17 @@
   text-align: center;
 }
 
-
 a,
 a:hover,
 a:active,
 a:visited,
 a:focus {
   text-decoration: none;
-  color: #d77a61;
+  color: #d2a708;
 }
 
-*, body {
+*,
+body {
   padding: 0;
   margin: 0;
 }

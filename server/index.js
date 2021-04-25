@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken")
 const session = require("express-session")
 const cookieParser = require("cookie-parser")
 const path = require("path")
-const {Pool} = require("pg")
+const { Pool } = require("pg")
 
 const port = process.env.PORT || 3050
 const app = express()
@@ -13,11 +13,11 @@ require("dotenv").config()
 
 app.use(cookieParser())
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '../client/build')))
 app.use(cors({
   origin: ["http://localhost:3000"],
-  methods:["GET", "POST"],
+  methods: ["GET", "POST"],
   credentials: true
 }))
 app.use(session({
@@ -46,6 +46,58 @@ pool.connect((err, res) => {
 
 // ----------------------SIGN IN----------------------
 app.post('/signin', (req, res) => {
+  const email = req.body.email
+  const password = req.body.password
+  req.session.error = ""
+
+  pool.connect((er, db) => {
+    if (er) {
+      console.log("FAILED TO CONNECT TO DATABASE");
+      console.log(er);
+    } else {
+      db.query(
+        "SELECT * FROM users where email = $1",
+        [email],
+        (err, result) => {
+          if (err) {
+            console.log("ERROR IN SELECT");
+            console.log(err);
+          }
+          if (!result.rows.length) {
+            console.log("NO USER EXIST FOR THIS EMAIL");
+            req.session.error = "No user exist for this email"
+            res.redirect('/signin')
+          } else {
+            bcrypt(password, result.rowa[0].password, (error, isMatch) => {
+              if (isMatch) {
+                const id = result.rows[0].id
+                const token = jwt.sign({ id }, process.env.NODE_JWT_SECRET, {
+                  expiresIn: 300,
+                })
+
+                req.session.token = token
+                req.session.loggedIn = true
+                req.session.firstName = result.rows[0].f_name
+                req.session.lastName = result.rows[0].l_name
+                req.session.email = result.rows[0].email
+                req.session.uid = result.rows[0].id
+
+                res.redirect('/dashboard/' + req.session.uid)
+              } else {
+                console.log("PASSWORD IS NOT CORRECT");
+                req.session.error = "Password is not correct"
+                res.redirect("/signin")
+              }
+            })
+          }
+        }
+      )
+    }
+  })
+})
+
+app.get('/signin', (req, res) => {
+  res.send(req.session.error)
 })
 // ----------------------/SIGN IN----------------------
 
@@ -68,26 +120,28 @@ app.post('/signup', (req, res) => {
     req.session.error = "Passwords do not match"
     res.redirect("/signup")
   } else {
-    bcrypt.hash(password, 10, (err, hash) => {
-      if (err) {
+    bcrypt.hash(password, 10, (errHash, hash) => {
+      if (errHash) {
         console.log("ERROR IN HASH");
-        console.log(err);
+        console.log(errHash);
         // --------put some string to req.session.error?--------
+        req.session.error = "Some error in hash password"
         res.redirect("/signup")
       } else {
-        pool.connect((err, db) => {
+        pool.connect((errPool, db) => {
           "INSERT INTO users (f_name, l_name, email, password) VALUES ($1, $2, $3, $4)",
-          [firstName, lastName, email, password],
-          (error, result) => {
-            if(error) {
-              console.log("ERROR IN INSERT");
-              console.log(error);
-              res.redirect("/signup")
-            } else {
-              console.log("USER ADDED");
-              res.redirect("/signin")
+            [firstName, lastName, email, password],
+            (errInsert, result) => {
+              if (errInsert) {
+                console.log("ERROR IN INSERT");
+                console.log(errInsert);
+                req.session.error = "Some error in insert"
+                res.redirect("/signup")
+              } else {
+                console.log("USER ADDED");
+                res.redirect("/")
+              }
             }
-          }
         })
       }
     })

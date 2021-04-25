@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import {Switch, Route, Redirect} from 'react-router-dom'
 import "./App.css";
 
-import {SignIn, SignUp} from './components/index'
+import {Dashboard, SignIn, SignUp} from './components/index'
 
 
 
@@ -17,6 +17,7 @@ function App() {
         <Route exact path="/" component={SignIn} />
         <Route  path="/signin" component={SignIn} />
         <Route  path="/signup" component={SignUp} />
+        <Route  path="/dashboaed/:id" component={Dashboard} />
       </Switch>
 
     </div>

@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Hero from "../assets/hero01.JPG";
-import { TextField, Icon, Grid } from "@material-ui/core";
 import { Link } from "react-router-dom";
-// import axios from 'axios'
+import axios from 'axios'
 import { PrimaryButton, PrimaryTextInput } from "../components/UIkit";
-import styled from "styled-components";
-import {SignUp} from './index'
 import {SignInOutContainer, SignInOutHero, SignInOutForm, ErrorMessage} from './styles/SignInOut.styles'
 
 const SignIn = () => {
@@ -14,12 +11,14 @@ const SignIn = () => {
 
   useEffect(() => {
     // console.log("USE EFFECT IN SIGNIN EVOKED");
-    // axios.get('/signin').then((response) => {
-    //   if (response.data.length < 50) {
-    //     console.log(response);
-    //     setError(response.data)
-    //   }
-    // })
+    setError("")
+    axios.get('/signin').then((response) => {
+      // if (response.data.length < 50) {
+      if (response.data) {
+        console.log("HHL ", response.data);
+        setError(response.data)
+      }
+    })
   }, []);
 
   return (

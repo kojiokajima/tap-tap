@@ -9,8 +9,9 @@ const SignUp = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    setError("")
     axios.get("/signup").then((response) => {
-      if (response) {
+      if (response.data.length < 50) {
         setError(response.data)
       }
     })
