@@ -26,7 +26,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 10
+    maxAge: 1000 * 60 * 10
   }
 }))
 
@@ -83,6 +83,7 @@ app.post('/signin', (req, res) => {
                 req.session.uid = result.rows[0].id
                 // req.session.image = 
 
+                req.session.error = ""
                 res.redirect('/dashboard/' + req.session.uid)
               } else {
                 console.log("PASSWORD IS NOT CORRECT");
@@ -98,7 +99,16 @@ app.post('/signin', (req, res) => {
 })
 
 app.get('/signin', (req, res) => {
-  res.send(req.session.error)
+  if (req.session.error) {
+    res.send({
+      error: req.session.error,
+      loggedIn: false
+    })
+  } else {
+    res.send({
+      loggedin: true
+    })
+  }
 })
 
 app.post('/test', (req, res) => {
@@ -136,18 +146,18 @@ app.post('/signup', (req, res) => {
         pool.connect((errPool, db) => {
           db.query(
             "INSERT INTO users (f_name, l_name, email, password) VALUES ($1, $2, $3, $4)",
-              [firstName, lastName, email, hash],
-              (errInsert, result) => {
-                if (errInsert) {
-                  console.log("ERROR IN INSERT");
-                  console.log(errInsert);
-                  req.session.error = "Some error in insert"
-                  res.redirect("/signup")
-                } else {
-                  console.log("USER ADDED");
-                  res.redirect("/signin")
-                }
+            [firstName, lastName, email, hash],
+            (errInsert, result) => {
+              if (errInsert) {
+                console.log("ERROR IN INSERT");
+                console.log(errInsert);
+                req.session.error = "Some error in insert"
+                res.redirect("/signup")
+              } else {
+                console.log("USER ADDED");
+                res.redirect("/signin")
               }
+            }
           )
         })
       }
@@ -163,7 +173,7 @@ app.get("/signup", (req, res) => {
 
 // ----------------------USER AUTH----------------------
 app.get("/userAuth", (req, res) => {
-  if(req.session.loggedIn) {
+  if (req.session.loggedIn) {
     res.send({
       uid: req.session.uid,
       firstName: req.session.firstName,
@@ -178,6 +188,37 @@ app.get("/userAuth", (req, res) => {
   }
 })
 // ----------------------/USER AUTH----------------------
+
+
+// ----------------------BEER DATA----------------------
+app.get("/beerData", (req, res) => {
+  const uid = req.session.uid
+  // console.log("UID ISIS beerData ", uid);
+  pool.connect((errPool, db) => {
+    db.query(
+      "SELECT * FROM beers inner join users on beers.user_id = users.id where users.id = $1",
+      [uid],
+      (errSelect, results) => {
+        res.send(results.rows)
+      }
+    )
+  })
+})
+
+app.get("/allBeerData", (req, res) => {
+  const uid = req.session.uid
+  // console.log("UID ISIS ", uid);
+  pool.connect((errPool, db) => {
+    db.query(
+      "SELECT * FROM beers WHERE user_id != $1",
+      [uid],
+      (errSelect, results) => {
+        res.send(results.rows)
+      }
+    )
+  })
+})
+// ----------------------/BEER DATA----------------------
 
 
 

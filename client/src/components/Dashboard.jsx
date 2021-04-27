@@ -1,57 +1,60 @@
-import React, {  useState, useEffect } from "react";
-import {useSelector, useDispatch} from 'react-redux';
-import {Link, Redirect} from 'react-router-dom'
-import axios from 'axios'
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
+import axios from "axios";
+import { Avatar } from "@material-ui/core";
 
-import {selectUser, selectStore, login} from '../features/userSlice'
+import { selectUser, selectStore, login, logout } from "../features/userSlice";
+import { setCurrentBeer, setBeerList, selectCurrentBeer, selectBeerList } from "../features/beerSlice";
 import "./styles/Dashboard.styles.scss";
+import { PrimaryButton, PrimaryCard, DashboardSide, DashboardFriendsTaps, DashboardMyTaps } from "./UIkit/index";
 
 const Dashboard = () => {
-  const user = useSelector(selectUser)
-  const store = useSelector(selectStore)
-  const [sessionExpired, setSessionExpired] = useState(false)
-
-  const dispatch = useDispatch()
+  const user = useSelector(selectUser);
+  const store = useSelector(selectStore);
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const imageUrl =
+    "https://images.unsplash.com/photo-1607611439230-fcbf50e42f7c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1268&q=80";
+  const currentBeer = useSelector(selectCurrentBeer)
+  const beerList = useSelector(selectBeerList)
 
   useEffect(() => {
-    console.log("USER IS ", user);
-    console.log("STORE IS ", store);
     axios.get("/userAuth").then((response) => {
+      // console.log("RESPONSE ", response.data);
       if (response.data.loggedIn) {
-        console.log(response.data);
-        dispatch(login({
-          uid: response.data.uid,
-          firstName: response.data.firstName,
-          lastName: response.data.lastName,
-          email: response.data.email,
-        }))
+        dispatch(
+          login({
+            uid: response.data.uid,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            email: response.data.email,
+          })
+        );
+        console.log("USER IS ", user);
       } else {
-        setSessionExpired(true)
+        dispatch(logout());
+        history.push("/signin");
       }
-    })
+    });
 
-  }, [])
+  }, []); 
 
-  if (!sessionExpired) {
-    return (
-      <div className="dashboard">
-        <div className="sidebar">
-          <div className="sidebar-profile">
-            
-            {user?.firstName}
-          </div>
-          <div className="sidebar-buttons">
-  
-          </div>
-        </div>
-        <div className="content">
-          this is content
-        </div>
+  return (
+    <div className="dashboard">
+      <DashboardSide user={user} imageUrl={imageUrl} />
+
+      <div className="content">
+        <Switch>
+          {/* <Route exact path="/dashboard/:id(/yourtaps)?" render={() => <DashboardMyTaps beerList={beerList} />} /> */}
+          <Route exact path="/dashboard/:id" render={() => <DashboardMyTaps beerList={beerList} />} />
+          <Route exact path="/dashboard/:id/friendstaps" component={DashboardFriendsTaps} />
+        </Switch>
+
+        
       </div>
-    );
-  } else {
-    return <Redirect to="/signin" />
-  }
+    </div>
+  );
 };
 
 export default Dashboard;
