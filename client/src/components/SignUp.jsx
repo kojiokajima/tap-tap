@@ -9,12 +9,20 @@ const SignUp = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    setError("")
     axios.get("/signup").then((response) => {
-      if (response) {
+      if (response.data.length < 50) {
         setError(response.data)
       }
     })
   }, [])
+
+  // const test = () => {
+  //   console.log("Yo Clicked");
+  //   axios.post("/test").then((response) => {
+  //     console.log(response);
+  //   })
+  // }
 
   return (
     <SignInOutContainer>
@@ -39,6 +47,7 @@ const SignUp = () => {
           <Link to="/signin" >already have an account?</Link>
         </form>
       </SignInOutForm>
+      {/* <PrimaryButton label={"go to sign in"} onClick={test} /> */}
     </SignInOutContainer>
   )
 }

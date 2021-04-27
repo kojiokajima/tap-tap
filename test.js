@@ -4,4 +4,4 @@ const splitted = string.split(" ")
 console.log(splitted); // --> ["Koji", "Okajima"]
 
 
-console.log(!!"")
+console.log(!!0)
