@@ -5,9 +5,11 @@ import axios from "axios";
 import { Avatar } from "@material-ui/core";
 
 import { selectUser, selectStore, login, logout } from "../features/userSlice";
-import { setCurrentBeer, setBeerList, selectCurrentBeer, selectBeerList } from "../features/beerSlice";
+import { setCurrentBeer, setBeerList, selectCurrentBeer, selectBeerList, toggleIsModalOpen ,setAndShowModal } from "../features/beerSlice";
 import "./styles/Dashboard.styles.scss";
 import { PrimaryButton, PrimaryCard, DashboardSide, DashboardFriendsTaps, DashboardMyTaps } from "./UIkit/index";
+import {DashboardContainer, ContentContainer} from './styles/Dashboard.styles'
+import {BeerModal} from './UIkit/index'
 
 const Dashboard = () => {
   const user = useSelector(selectUser);
@@ -18,6 +20,19 @@ const Dashboard = () => {
     "https://images.unsplash.com/photo-1607611439230-fcbf50e42f7c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1268&q=80";
   const currentBeer = useSelector(selectCurrentBeer)
   const beerList = useSelector(selectBeerList)
+
+  const showModal = (beerItem) => {
+    // console.log("BEER ITEM: ", beerItem);
+    dispatch(setCurrentBeer({
+      name: beerItem.name,
+      brewery: beerItem.brewery,
+      style: beerItem.style,
+      memo: beerItem.memo,
+      untapped: beerItem.untapped
+    }))
+    dispatch(toggleIsModalOpen())
+    // dispatch(test())
+  }
 
   useEffect(() => {
     axios.get("/userAuth").then((response) => {
@@ -41,18 +56,25 @@ const Dashboard = () => {
   }, []); 
 
   return (
+    // <DashboardContainer>
     <div className="dashboard">
       <DashboardSide user={user} imageUrl={imageUrl} />
 
+      {/* <ContentContainer> */}
       <div className="content">
         <Switch>
           {/* <Route exact path="/dashboard/:id(/yourtaps)?" render={() => <DashboardMyTaps beerList={beerList} />} /> */}
-          <Route exact path="/dashboard/:id" render={() => <DashboardMyTaps beerList={beerList} />} />
-          <Route exact path="/dashboard/:id/friendstaps" component={DashboardFriendsTaps} />
+          <Route exact path="/dashboard/:id" render={() => <DashboardMyTaps beerList={beerList} showModal={showModal} />} />
+          {/* <Route exact path="/dashboard/:id/friendstaps" component={DashboardFriendsTaps} /> */}
+          <Route exact path="/dashboard/:id/friendstaps" render={() => <DashboardFriendsTaps beerList={beerList} showModal={showModal} />} />
         </Switch>
+        <BeerModal />
+
 
         
-      </div>
+      {/* </ContentContainer> */}
+    </div>
+    {/* </DashboardContainer> */}
     </div>
   );
 };

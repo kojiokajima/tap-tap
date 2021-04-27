@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import {CardActionArea, CardMedia, CardContent, Typography} from "@material-ui/core";
 
-const PrimaryCard = ({name, brewery, style}) => {
+const PrimaryCard = ({name, brewery, style, onClick}) => {
   const imageUrl = "https://images.unsplash.com/photo-1607611439230-fcbf50e42f7c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1268&q=80"
 
   return (
-    <MyCardActionArea>
+    <MyCardActionArea onClick={onClick} >
       <CardMedia
         component="img"
         alt="Contemplative Reptile"

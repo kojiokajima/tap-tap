@@ -5,6 +5,7 @@ import {useHistory, Link} from 'react-router-dom'
 
 import { PrimaryButton } from "./index";
 import {selectUser,logout} from '../../features/userSlice'
+import {Sidebarcontainer} from '../styles/Dashboard.styles'
 
 const DashboardSide = ({imageUrl, user}) => {
   const dispatch = useDispatch()
@@ -23,6 +24,7 @@ const DashboardSide = ({imageUrl, user}) => {
 
   return (
     <div className="sidebar">
+    {/* <Sidebarcontainer> */}
       <div className="sidebar-profile">
         <Avatar className="profile-image" alt="profile" src={imageUrl} />
         <span className="profile-name">
@@ -37,6 +39,7 @@ const DashboardSide = ({imageUrl, user}) => {
         <PrimaryButton label={"Logout"} onClick={signout} />
       </div>
     </div>
+    // </Sidebarcontainer>
   );
 };
 

@@ -9,7 +9,8 @@ import * as serviceWorker from './serviceWorker';
 import {StylesProvider} from '@material-ui/styles'
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <>
     <Provider store={store}>
       <BrowserRouter>
         <StylesProvider injectFirst>
@@ -17,7 +18,8 @@ ReactDOM.render(
         </StylesProvider>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
+  {/* </React.StrictMode>, */}
+  </>,
   document.getElementById('root')
 );
 

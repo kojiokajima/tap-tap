@@ -1,19 +1,33 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setBeerList, selectBeerList } from "../../features/beerSlice";
 
-import { PrimaryCard } from "./index";
+import { PrimaryCard, BeerModal } from "./index";
+import { setBeerList, test, setCurrentBeer, toggleIsModalOpen, selectBeerList, selectCurrentBeer, selectIsModalOpen, setAndShowModal} from '../../features/beerSlice'
 
-const DashboardMyTaps = (props) => {
-  console.log("PROPS.BEERLIST ", props.beerList);
+const DashboardMyTaps = ({showModal}) => {
   const beerList = useSelector(selectBeerList);
+  const currentBeer = useSelector(selectCurrentBeer);
+  const isModalOpen = useSelector(selectIsModalOpen);
   const dispatch = useDispatch();
+
+  // const showModal = (beerItem) => {
+  //   // console.log("BEER ITEM: ", beerItem);
+  //   dispatch(setCurrentBeer({
+  //     name: beerItem.name,
+  //     brewery: beerItem.brewery,
+  //     style: beerItem.style,
+  //     memo: beerItem.memo,
+  //     untapped: beerItem.untapped
+  //   }))
+  //   dispatch(toggleIsModalOpen())
+  //   // dispatch(test())
+  // }
 
   useEffect(() => {
     axios.get("/beerData").then((response) => {
       // --> user's beer list
-      console.log("RESRES ", response.data);
+      console.log("RESPONSE(/beerData) ", response.data);
       dispatch(setBeerList(response.data));
       console.log("BEER LIST IS ", beerList);
     });
@@ -26,7 +40,8 @@ const DashboardMyTaps = (props) => {
         {beerList.length > 1 &&
           beerList.map((beerItem, index) => (
             <div className="beerlist-item" key={index}>
-              <PrimaryCard {...beerItem} />
+              {/* <PrimaryCard {...beerItem} onClick={() => showModal(beerItem)} /> */}
+              <PrimaryCard {...beerItem} onClick={() => showModal(beerItem)} />
             </div>
           ))}
       </div>

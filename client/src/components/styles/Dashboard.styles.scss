@@ -33,11 +33,8 @@
   & .content {
     background-color: #faebd7;
     width: 75vw;
-    height: 100vh;
+    height: 96vh;
     padding: 2vh 3vw;
-
-    // & .dashboard-title {
-      // }
       
     & h2  {
       margin: 2vh 0;
@@ -45,13 +42,15 @@
 
     & .beerlist-container {
       width: 100%;
+      height: 85vh;
       display: flex;
       flex-wrap: wrap;
+      overflow: scroll;
 
       & .beerlist-item {
         width: 19vw;
         height: 30vw;
-        margin: 1vh 2vw;
+        margin: 3vh 2vw;
         & button {
           width: 100%;
           height: 100%;
