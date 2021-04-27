@@ -10,10 +10,10 @@ const DashboardFriendsTaps = ({showModal}) => {
 
   useEffect(() => {
     axios.get("/allBeerData").then((response) => {
-      console.log("RESPONSE(/allBeerData)", response.data);
+      // console.log("RESPONSE(/allBeerData)", response.data);
       // dispatch(setBeerList(response.data))
       dispatch(setBeerList(response.data));
-      console.log("beer list is ", beerList);
+      // console.log("beer list is ", beerList);
     });
   }, []);
 

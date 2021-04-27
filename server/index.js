@@ -220,6 +220,36 @@ app.get("/allBeerData", (req, res) => {
 })
 // ----------------------/BEER DATA----------------------
 
+// ----------------------UPDATE----------------------
+app.post("/updateBeerData", (req, res) => {
+  // --> raeHeaders[15]
+  console.log();
+  const id = req.body.id
+  const name = req.body.name
+  const brewery = req.body.brewery
+  const style = req.body.style
+  const memo = req.body.memo
+  console.log("REQ.BODY IS ", req.body);
+  // if (req.rowHeaders)
+  console.log("REQ IS ", req.rawHeaders[15]);
+  
+  
+  pool.connect((errConnect, db) => {
+    db.query(
+      "update beers set (name, brewery, style, memo) = ($1, $2, $3, $4) where id = $5",
+      [name, brewery, style, memo, id],
+      (errUpdate, result) => {
+        if (errUpdate) {
+          console.log("ERROR IN UPDATE");
+        }
+      }
+    )
+  })
+  res.redirect(req.rawHeaders[15])
+  // res.links({next: req.rawHeaders[15]})
+
+})
+// ----------------------/UPDATE----------------------
 
 
 app.get('*', (req, res) => {

@@ -3,10 +3,10 @@ import { Button } from "@material-ui/core";
 import styled from "styled-components";
 // import {styled} from '@material-ui/styles'
 
-const PrimaryButton = ({ label, onClick }) => {
+const PrimaryButton = ({ label, onClick, type="submit" }) => {
   return (
     <div>
-      <MyButton onClick={onClick} type="submit">
+      <MyButton onClick={onClick} type={type} >
         {label}
       </MyButton>
     </div>
