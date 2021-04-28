@@ -171,10 +171,15 @@ const BeerModal = () => {
               style={{ display: "none" }}
             />
             {
+              currentBeer?.userId === currentUser?.uid ?
+
               currentFavorite ?
                 <Favorite style={{color: "red"}} onClick={toggleFavorite} />
               :
                 <FavoriteBorder onClick={toggleFavorite} />
+
+              :
+              null
             }
           </div>
         </DialogContent>

@@ -27,7 +27,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 1000 * 60 * 10
+    maxAge: 1000 * 60 * 60
   }
 }))
 
@@ -237,7 +237,6 @@ app.get("/favoriteBeerData", (req, res) => {
 
 app.get("/untappedBeerData", (req, res) => {
   const uid = req.session.uid
-  console.log("UID is ", uid);
   pool.connect((errPool, db) => {
     db.query(
       "SELECT * FROM beers where user_id = $1 AND untapped = true",
@@ -337,7 +336,7 @@ app.post("/addBeer", (req, res) => {
 
   pool.connect((errPool, db) => {
     db.query(
-      "INSERT INTO beers (user_id, name, brewery, style, memo, untapped, favorite) VALUES ($1, $2, $3, $4, $5, false, false)",
+      "INSERT INTO beers (user_id, name, brewery, style, memo, untapped, favorite) VALUES ($1, $2, $3, $4, $5, true, false)",
       [userId, name, brewery, style, memo],
       (errInsert, result) => {
         if (errInsert) {
@@ -370,7 +369,7 @@ app.post("/addToMine", (req, res) => {
   // untapped: true
   pool.connect((errPool, db) => {
     db.query(
-      "INSERT INTO beers (user_id, name, brewery, style, memo, untapped, favorite) VALUES ($1, $2, $3, $4, $5, false, false)",
+      "INSERT INTO beers (user_id, name, brewery, style, memo, untapped, favorite) VALUES ($1, $2, $3, $4, $5, true, false)",
       [userId, name, brewery, style, memo],
       (errInsert, result) => {
         if (errInsert) {
