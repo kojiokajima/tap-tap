@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Hero from '../../assets/hero.jpg'
 
 export const SignInOutContainer = styled.div`
   display: flex;
@@ -13,6 +14,9 @@ export const SignInOutHero = styled.div`
   border: 1px solid #000;
   width: 50vw;
   height: 100vh;
+  // background-color: green;
+  background-image: url(${Hero});
+  background-size: cover;
   & img {
     height: 100%;
     width: 100%;

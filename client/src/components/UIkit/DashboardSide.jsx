@@ -30,10 +30,10 @@ const DashboardSide = ({imageUrl, user}) => {
     <div className="sidebar">
     {/* <Sidebarcontainer> */}
       <div className="sidebar-profile">
-        <Avatar className="profile-image" alt="profile" src={imageUrl} />
-        <span className="profile-name">
+        {/* <Avatar className="profile-image" alt="profile" src={imageUrl} /> */}
+        {/* <span className="profile-name"> */}
           {user?.firstName} {user?.lastName}
-        </span>
+        {/* </span> */}
       </div>
       <div className="sidebar-buttons">
         <PrimaryButton label={"+ Add Tap"} onClick={() => dispatch(toggleIsBlankModalOpen())} />
