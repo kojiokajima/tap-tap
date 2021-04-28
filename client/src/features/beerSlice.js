@@ -11,9 +11,11 @@ export const beerSlice = createSlice({
       brewery: "",
       style: "",
       memo: "",
-      untapped: null
+      untapped: null,
+      favorite: null
     },
-    isModalOpen: false
+    isModalOpen: false,
+    isBlankModalOpen: false
   },
   reducers: {
     setBeerList: (state, action) => {
@@ -27,13 +29,13 @@ export const beerSlice = createSlice({
       state.currentBeer.style = action.payload.style
       state.currentBeer.memo = action.payload.memo
       state.currentBeer.untapped = action.payload.untapped
+      state.currentBeer.favorite = action.payload.favorite
     },
     toggleIsModalOpen: (state, action) => {
-      // console.log("HI,  state.isModalOpen is ", state.isModalOpen);
       state.isModalOpen = !state.isModalOpen
-      // console.log("HI,  state.isModalOpen is ", state.isModalOpen);
-      // console.log("HI,  state.isModalOpen is ", state.currentBeer);
-
+    },
+    toggleIsBlankModalOpen: (state, action) => {
+      state.isBlankModalOpen = !state.isBlankModalOpen
     },
     setAndShowModal: (state, action) => {
       setCurrentBeer(state, action)
@@ -49,7 +51,8 @@ export const beerSlice = createSlice({
 export const selectCurrentBeer = (state) => state.beer.currentBeer
 export const selectBeerList = (state) => state.beer.beerList
 export const selectIsModalOpen = (state) => state.beer.isModalOpen
+export const selectIsBlankModalOpen = (state) => state.beer.isBlankModalOpen
 
-export const {setBeerList, setCurrentBeer, toggleIsModalOpen, setAndShowModal, test} = beerSlice.actions
+export const {setBeerList, setCurrentBeer, toggleIsModalOpen, toggleIsBlankModalOpen, setAndShowModal, test} = beerSlice.actions
 
 export default beerSlice.reducer

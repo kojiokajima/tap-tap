@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogActions } from "@material-ui/core";
-import { FavoriteBorder } from "@material-ui/icons";
+import { FavoriteBorder, Favorite } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
 import { PrimaryButton, PrimaryTextInput } from "./index";
 import styled from "styled-components";
@@ -22,10 +22,10 @@ const BeerModal = () => {
   const currentUser = useSelector(selectUser);
   const [isDisabled, setIsDisabled] = useState(true);
   const [isEdit, setIsEdit] = useState(true);
-  const [currentUntapped, setCurrentUntapped] = useState(false)
+  const [currentUntapped, setCurrentUntapped] = useState(false);
+  const [currentFavorite, setCurrentFavorite] = useState(false)
 
-  const toggleDisabled = (e) => {
-    // --> こっちが先に動いてからタイプの判定がくるのか
+  const toggleDisabled = () => { // --> こっちが先に動いてからタイプの判定がくるのか
 
     axios.post("/updateBeerData").then((response) => {
       setIsDisabled(!isDisabled);
@@ -64,14 +64,26 @@ const BeerModal = () => {
 
   const toggleTapped = () => {
     // axios.post("/toggleTapped")
-    setCurrentUntapped(!currentUntapped)
+    setCurrentUntapped(!currentUntapped);
   };
+
+  const toggleFavorite = () => {
+    console.log("HI TOGGLE FAVORITE");
+    setCurrentFavorite(!currentFavorite)
+    axios.post("/toggleFavorite", {
+      ...currentBeer,
+      // favorite: currentFavorite
+    }).then(() => {
+      window.location.reload()
+    })
+  }
 
   console.log("CURRENT BEER IS ", currentBeer);
 
   useEffect(() => {
-    setCurrentUntapped(currentBeer.untapped)
-  }, [isModalOpen])
+    setCurrentUntapped(currentBeer.untapped);
+    setCurrentFavorite(currentBeer.favorite)
+  }, [isModalOpen]);
 
   return (
     // <Dialog
@@ -143,18 +155,28 @@ const BeerModal = () => {
           </div>
           <br />
           <div className="dialog-form">
-            <label name="untapped" htmlFor="" onClick={isDisabled ? null : toggleTapped}>
+            <label
+              name="untapped"
+              htmlFor=""
+              onClick={isDisabled ? null : toggleTapped}
+            >
               {
-                // currentBeer.untapped ?
-                currentUntapped ?
-                  "untapped"
-                :
-                  "tapped!"
+                currentUntapped ? "untapped" : "tapped!"
               }
             </label>
-            <input type="text" name="untrapped" value={currentUntapped} style={{display: "none"}} />
+            <input
+              type="text"
+              name="untrapped"
+              value={currentUntapped}
+              style={{ display: "none" }}
+            />
+            {
+              currentFavorite ?
+                <Favorite style={{color: "red"}} onClick={toggleFavorite} />
+              :
+                <FavoriteBorder onClick={toggleFavorite} />
+            }
           </div>
-
         </DialogContent>
         {currentUser?.uid === currentBeer?.userId ? (
           <DialogActions>
@@ -184,6 +206,7 @@ const BeerModal = () => {
 
 export default BeerModal;
 
+
 const DialogContainer = styled(Dialog)`
   & .dialog-form {
     width: 100%;
@@ -197,7 +220,7 @@ const DialogContainer = styled(Dialog)`
   }
   & .MuiDialog-paperWidthSm {
     width: 60vw;
-    height: 60vh;
+    height: 70vh;
 
     & .MuiDialogContent-root {
       & label {

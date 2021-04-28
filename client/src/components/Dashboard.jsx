@@ -30,7 +30,8 @@ const Dashboard = () => {
       brewery: beerItem.brewery,
       style: beerItem.style,
       memo: beerItem.memo,
-      untapped: beerItem.untapped
+      untapped: beerItem.untapped,
+      favorite: beerItem.favorite
     }))
     dispatch(toggleIsModalOpen())
     // dispatch(test())

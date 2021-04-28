@@ -6,6 +6,7 @@ const session = require("express-session")
 const cookieParser = require("cookie-parser")
 const path = require("path")
 const { Pool } = require("pg")
+const pg = require("pg")
 
 const port = process.env.PORT || 3050
 const app = express()
@@ -31,9 +32,11 @@ app.use(session({
 }))
 
 const pool = new Pool({
+  // const pool = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 })
+
 
 pool.connect((err, res) => {
   if (err) {
@@ -230,14 +233,15 @@ app.post("/updateBeerData", (req, res) => {
   const style = req.body.style
   const memo = req.body.memo
   const untapped = !req.body.untapped
+  const favorite = req.body.favorite
   console.log("REQ.BODY IS ", req.body);
   console.log("REQ IS ", req.rawHeaders[15]);
 
 
   pool.connect((errConnect, db) => {
     db.query(
-      "update beers set (name, brewery, style, memo, untapped) = ($1, $2, $3, $4, $5) where id = $6",
-      [name, brewery, style, memo, untapped, id],
+      "update beers set (name, brewery, style, memo, untapped, favorite) = ($1, $2, $3, $4, $5, $6) where id = $6",
+      [name, brewery, style, memo, untapped, favorite, id],
       (errUpdate, result) => {
         if (errUpdate) {
           console.log("ERROR IN UPDATE");
@@ -251,6 +255,24 @@ app.post("/updateBeerData", (req, res) => {
   // res.end()
 
 });
+
+app.post("/toggleFavorite", (req, res) => {
+  console.log("BODY ", req.body);
+  const favorite = !req.body.favorite
+  const id = req.body.id
+  pool.connect((errPool, db) => {
+    db.query(
+      "UPDATE beers set favorite = $1 where id = $2",
+      [favorite, id],
+      (errUpdate, result) => {
+        if (errUpdate) {
+          console.log("ERROR IN RESULT");
+        }
+      }
+    )
+  })
+  res.end()
+})
 
 app.post("/deleteItem", (req, res) => {
   console.log(req.body);
@@ -276,6 +298,31 @@ app.post("/deleteItem", (req, res) => {
 
 
 // ----------------------ADD----------------------
+app.post("/addBeer", (req, res) => {
+  const userId = req.session.uid
+  const name = req.body.name
+  const brewery = req.body.brewery
+  const style = req.body.style
+  const memo = req.body.memo
+
+  pool.connect((errPool, db) => {
+    db.query(
+      "INSERT INTO beers (user_id, name, brewery, style, memo, untapped, favorite) VALUES ($1, $2, $3, $4, $5, false, false)",
+      [userId, name, brewery, style, memo],
+      (errInsert, result) => {
+        if (errInsert) {
+          console.log("ERROR IN INSERT");
+        } else {
+          console.log("BEER ADDED");
+        }
+      }
+    )
+  })
+
+  res.redirect(req.rawHeaders[15])
+
+})
+
 app.post("/addToMine", (req, res) => {
   console.log(req.body);
   console.log(req.rawHeaders[15]);
@@ -293,7 +340,7 @@ app.post("/addToMine", (req, res) => {
   // untapped: true
   pool.connect((errPool, db) => {
     db.query(
-      "INSERT INTO beers (user_id, name, brewery, style, memo, untapped) VALUES ($1, $2, $3, $4, $5, false)",
+      "INSERT INTO beers (user_id, name, brewery, style, memo, untapped, favorite) VALUES ($1, $2, $3, $4, $5, false, false)",
       [userId, name, brewery, style, memo],
       (errInsert, result) => {
         if (errInsert) {
