@@ -6,6 +6,8 @@ import { PrimaryButton, PrimaryTextInput } from "./index";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import {DialogContainer} from '../styles/Modal.styles'
+
 
 import {
   toggleIsModalOpen,
@@ -96,6 +98,7 @@ const BeerModal = () => {
     >
       {/* <DialogTitle id="alert-dialog-title">[]</DialogTitle> */}
       <form action="/updateBeerData" method="post">
+      {/* <DialogForm action="/updateBeerData" method="post"> */}
         <DialogContent>
           <div className="dialog-form" style={{ display: "none" }}>
             <PrimaryTextInput
@@ -204,35 +207,10 @@ const BeerModal = () => {
           </DialogActions>
         )}
       </form>
+      {/* </DialogForm> */}
       {/* </Dialog> */}
     </DialogContainer>
   );
 };
 
 export default BeerModal;
-
-
-const DialogContainer = styled(Dialog)`
-  & .dialog-form {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-
-    & .MuiGrid-spacing-xs-1 > * {
-      width: 90%;
-    }
-  }
-  & .MuiDialog-paperWidthSm {
-    width: 60vw;
-    height: 70vh;
-
-    & .MuiDialogContent-root {
-      & label {
-        color: #d2a708;
-        display: inline-block;
-        width: 30%;
-      }
-    }
-  }
-`;

@@ -25,7 +25,8 @@ export default PrimaryButton;
 const MyButton = styled(Button)`
   background-color: #d2a708;
   color: white;
-  width: 150px;
+  // width: 150px;
+  width: 17vw;
   &:hover {
     color: #d2a708;
     background-color: white;

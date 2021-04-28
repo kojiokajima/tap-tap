@@ -59,12 +59,12 @@ const Dashboard = () => {
   }, []); 
 
   return (
-    // <DashboardContainer>
-    <div className="dashboard">
+    <DashboardContainer>
+    {/* <div className="dashboard"> */}
       <DashboardSide user={user} imageUrl={imageUrl} />
 
       {/* <ContentContainer> */}
-      <div className="content">
+      {/* <div className="content"> */}
         <Switch>
           {/* <Route exact path="/dashboard/:id(/yourtaps)?" render={() => <DashboardMyTaps beerList={beerList} />} /> */}
           <Route exact path="/dashboard/:id" render={() => <DashboardMyTaps beerList={beerList} showModal={showModal} />} />
@@ -78,9 +78,9 @@ const Dashboard = () => {
 
         
       {/* </ContentContainer> */}
-    </div>
-    {/* </DashboardContainer> */}
-    </div>
+    {/* </div> */}
+    </DashboardContainer>
+    // </div>
   );
 };
 

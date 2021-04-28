@@ -4,6 +4,8 @@ import axios from "axios";
 import { selectBeerList, setBeerList } from "../../features/beerSlice";
 import { PrimaryCard } from "./index";
 
+import {ContentContainer, ContentTitle, BeerListContainer, BeerListItem} from '../styles/Dashboard.styles'
+
 const DashboardFriendsTaps = ({showModal}) => {
   const dispatch = useDispatch();
   const beerList = useSelector(selectBeerList);
@@ -18,17 +20,27 @@ const DashboardFriendsTaps = ({showModal}) => {
   }, []);
 
   return (
-    <div>
-      <h2 className="dashboard-title">Friends Taps</h2>
-      <div className="beerlist-container">
-        {beerList.length > 1 &&
+    // <div>
+    <ContentContainer>
+
+      {/* <h2 className="dashboard-title">My Taps</h2> */}
+      <ContentTitle>Friends' Taps</ContentTitle>
+      {/* <div className="beerlist-container"> */}
+      <BeerListContainer>
+
+        {beerList.length > 0 &&
           beerList.map((beerItem, index) => (
-            <div className="beerlist-item" key={index}>
+            // <div className="beerlist-item" key={index}>
+            <BeerListItem key={index}>
+              {/* <PrimaryCard {...beerItem} onClick={() => showModal(beerItem)} /> */}
               <PrimaryCard {...beerItem} onClick={() => showModal(beerItem)} />
-            </div>
+            {/* </div> */}
+            </BeerListItem>
           ))}
-      </div>
-    </div>
+      {/* </div> */}
+      </BeerListContainer>
+    {/* </div> */}
+    </ContentContainer>
   );
 };
 
