@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { PrimaryCard, BeerModal } from "./index";
 import { setBeerList, test, setCurrentBeer, toggleIsModalOpen, selectBeerList, selectCurrentBeer, selectIsModalOpen, setAndShowModal} from '../../features/beerSlice'
 
-const DashboardMyTaps = ({showModal}) => {
+const DashboardUntapped = ({showModal}) => {
   const beerList = useSelector(selectBeerList);
   const currentBeer = useSelector(selectCurrentBeer);
   const isModalOpen = useSelector(selectIsModalOpen);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get("/beerData").then((response) => {
+    axios.get("/untappedBeerData").then((response) => {
       // --> user's beer list
       // console.log("RESPONSE(/beerData) ", response.data);
       dispatch(setBeerList(response.data));
@@ -22,7 +22,7 @@ const DashboardMyTaps = ({showModal}) => {
 
   return (
     <div>
-      <h2 className="dashboard-title">My Taps</h2>
+      <h2 className="dashboard-title">Untapped</h2>
       <div className="beerlist-container">
         {beerList.length > 0 &&
           beerList.map((beerItem, index) => (
@@ -36,4 +36,4 @@ const DashboardMyTaps = ({showModal}) => {
   );
 };
 
-export default DashboardMyTaps;
+export default DashboardUntapped;

@@ -221,6 +221,36 @@ app.get("/allBeerData", (req, res) => {
     )
   })
 })
+
+app.get("/favoriteBeerData", (req, res) => {
+  const uid = req.session.uid
+  pool.connect((errPool, db) => {
+    db.query(
+      "SELECT * FROM beers where user_id = $1 AND favorite = true",
+      [uid],
+      (errSelect, results) => {
+        res.send(results.rows)
+      }
+    )
+  })
+})
+
+app.get("/untappedBeerData", (req, res) => {
+  const uid = req.session.uid
+  console.log("UID is ", uid);
+  pool.connect((errPool, db) => {
+    db.query(
+      "SELECT * FROM beers where user_id = $1 AND untapped = true",
+      [uid],
+      (errSelect, results) => {
+        if (errSelect) {
+          console.log(errSelect);
+        } else {
+          res.send(results.rows)
+        }}
+    )
+  })
+})
 // ----------------------/GET BEER DATA----------------------
 
 // ----------------------UPDATE AND DELETE----------------------

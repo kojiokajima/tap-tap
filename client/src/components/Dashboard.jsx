@@ -7,7 +7,7 @@ import { Avatar } from "@material-ui/core";
 import { selectUser, selectStore, login, logout } from "../features/userSlice";
 import { setCurrentBeer, setBeerList, selectCurrentBeer, selectBeerList, toggleIsModalOpen ,setAndShowModal } from "../features/beerSlice";
 import "./styles/Dashboard.styles.scss";
-import { PrimaryButton, PrimaryCard, DashboardSide, DashboardFriendsTaps, DashboardMyTaps } from "./UIkit/index";
+import { PrimaryButton, PrimaryCard, DashboardSide, DashboardFriendsTaps, DashboardMyTaps, DashboardFavorites, DashboardUntapped } from "./UIkit/index";
 import {DashboardContainer, ContentContainer} from './styles/Dashboard.styles'
 import {BeerModal} from './UIkit/index'
 
@@ -70,6 +70,8 @@ const Dashboard = () => {
           <Route exact path="/dashboard/:id" render={() => <DashboardMyTaps beerList={beerList} showModal={showModal} />} />
           {/* <Route exact path="/dashboard/:id/friendstaps" component={DashboardFriendsTaps} /> */}
           <Route exact path="/dashboard/:id/friendstaps" render={() => <DashboardFriendsTaps beerList={beerList} showModal={showModal} />} />
+          <Route exact path="/dashboard/:id/favorites" render={() => <DashboardFavorites beerList={beerList} showModal={showModal} />} />
+          <Route exact path="/dashboard/:id/untapped" render={() => <DashboardUntapped beerList={beerList} showModal={showModal} />} />
         </Switch>
         <BeerModal />
 
