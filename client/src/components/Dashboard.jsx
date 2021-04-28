@@ -22,9 +22,10 @@ const Dashboard = () => {
   const beerList = useSelector(selectBeerList)
 
   const showModal = (beerItem) => {
-    console.log("BEER ITEM: ", beerItem); // --> id -> beerItem.id
+    // console.log("BEER ITEM: ", beerItem.user_id); // --> id -> beerItem.id
     dispatch(setCurrentBeer({
       id: beerItem.id,
+      userId: beerItem.user_id,
       name: beerItem.name,
       brewery: beerItem.brewery,
       style: beerItem.style,

@@ -190,13 +190,14 @@ app.get("/userAuth", (req, res) => {
 // ----------------------/USER AUTH----------------------
 
 
-// ----------------------BEER DATA----------------------
+// ----------------------GET BEER DATA----------------------
 app.get("/beerData", (req, res) => {
   const uid = req.session.uid
   // console.log("UID ISIS beerData ", uid);
   pool.connect((errPool, db) => {
     db.query(
-      "SELECT * FROM beers inner join users on beers.user_id = users.id where users.id = $1",
+      // "SELECT * FROM beers inner join users on beers.user_id = users.id where users.id = $1",
+      "SELECT * FROM users right outer join beers on beers.user_id = users.id where users.id = $1",
       [uid],
       (errSelect, results) => {
         res.send(results.rows)
@@ -207,7 +208,6 @@ app.get("/beerData", (req, res) => {
 
 app.get("/allBeerData", (req, res) => {
   const uid = req.session.uid
-  // console.log("UID ISIS ", uid);
   pool.connect((errPool, db) => {
     db.query(
       "SELECT * FROM beers WHERE user_id != $1",
@@ -218,9 +218,9 @@ app.get("/allBeerData", (req, res) => {
     )
   })
 })
-// ----------------------/BEER DATA----------------------
+// ----------------------/GET BEER DATA----------------------
 
-// ----------------------UPDATE----------------------
+// ----------------------UPDATE AND DELETE----------------------
 app.post("/updateBeerData", (req, res) => {
   // --> raeHeaders[15]
   console.log();
@@ -229,27 +229,85 @@ app.post("/updateBeerData", (req, res) => {
   const brewery = req.body.brewery
   const style = req.body.style
   const memo = req.body.memo
+  const untapped = !req.body.untapped
   console.log("REQ.BODY IS ", req.body);
-  // if (req.rowHeaders)
   console.log("REQ IS ", req.rawHeaders[15]);
-  
-  
+
+
   pool.connect((errConnect, db) => {
     db.query(
-      "update beers set (name, brewery, style, memo) = ($1, $2, $3, $4) where id = $5",
-      [name, brewery, style, memo, id],
+      "update beers set (name, brewery, style, memo, untapped) = ($1, $2, $3, $4, $5) where id = $6",
+      [name, brewery, style, memo, untapped, id],
       (errUpdate, result) => {
         if (errUpdate) {
           console.log("ERROR IN UPDATE");
+          console.log(errUpdate);
         }
       }
     )
   })
-  res.redirect(req.rawHeaders[15])
-  // res.links({next: req.rawHeaders[15]})
 
+  res.redirect(req.rawHeaders[15])
+  // res.end()
+
+});
+
+app.post("/deleteItem", (req, res) => {
+  console.log(req.body);
+  console.log(req.rawHeaders[15]);
+  const id = req.body.id
+  pool.connect((errPool, db) => {
+    db.query(
+      "DELETE FROM beers where id = $1",
+      [id],
+      (errDelete, result) => {
+        if (errDelete) {
+          console.log("ERROR IN DELETE");
+        } else {
+          console.log("DELETED!");
+        }
+      }
+    )
+  })
+  res.end()
 })
-// ----------------------/UPDATE----------------------
+
+// ----------------------/UPDATE AND DELETE----------------------
+
+
+// ----------------------ADD----------------------
+app.post("/addToMine", (req, res) => {
+  console.log(req.body);
+  console.log(req.rawHeaders[15]);
+  const userId = req.body.currentUserId
+  const name = req.body.name
+  const brewery = req.body.brewery
+  const style = req.body.style
+  const memo = req.body.memo
+  // id: 5,
+  // userId: 6,
+  // name: 'Sierra Nevada',
+  // brewery: 'Sierra Nevada Pale Ale',
+  // style: 'American Pale Ale',
+  // memo: 'Ligid',
+  // untapped: true
+  pool.connect((errPool, db) => {
+    db.query(
+      "INSERT INTO beers (user_id, name, brewery, style, memo, untapped) VALUES ($1, $2, $3, $4, $5, false)",
+      [userId, name, brewery, style, memo],
+      (errInsert, result) => {
+        if (errInsert) {
+          console.log("ERROR IN INSERT");
+        } else {
+          console.log("ADDED TO YOURS!");
+        }
+      }
+    )
+  })
+  res.end()
+})
+
+// ----------------------/ADD----------------------
 
 
 app.get('*', (req, res) => {

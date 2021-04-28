@@ -24,12 +24,14 @@ const DashboardMyTaps = ({showModal}) => {
   //   // dispatch(test())
   // }
 
+  // console.log("YO BEER LIST ", beerList);
+
   useEffect(() => {
     axios.get("/beerData").then((response) => {
       // --> user's beer list
-      console.log("RESPONSE(/beerData) ", response.data);
+      // console.log("RESPONSE(/beerData) ", response.data);
       dispatch(setBeerList(response.data));
-      console.log("BEER LIST IS ", beerList);
+      // console.log("BEER LIST IS ", beerList);
     });
   }, []);
 
@@ -37,7 +39,7 @@ const DashboardMyTaps = ({showModal}) => {
     <div>
       <h2 className="dashboard-title">My Taps</h2>
       <div className="beerlist-container">
-        {beerList.length > 1 &&
+        {beerList.length > 0 &&
           beerList.map((beerItem, index) => (
             <div className="beerlist-item" key={index}>
               {/* <PrimaryCard {...beerItem} onClick={() => showModal(beerItem)} /> */}

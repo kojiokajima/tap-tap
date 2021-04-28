@@ -9,3 +9,7 @@
 
 // ---------inner join---------
 // select * from beers inner join users on beers.user_id = user.id where users.id = 4;
+
+
+
+// insert into beers (user_id, name, brewery, style, memo, untapped) values (4, 'Johns Brown', 'Devil Craft', 'Amber Ale', 'Pretty Good', true);

@@ -6,6 +6,7 @@ export const beerSlice = createSlice({
     beerList: [],
     currentBeer: {
       id: null,
+      userId: null,
       name: "",
       brewery: "",
       style: "",
@@ -20,6 +21,7 @@ export const beerSlice = createSlice({
     },
     setCurrentBeer: (state, action) => {      
       state.currentBeer.id = action.payload.id
+      state.currentBeer.userId = action.payload.userId
       state.currentBeer.name = action.payload.name
       state.currentBeer.brewery = action.payload.brewery
       state.currentBeer.style = action.payload.style
