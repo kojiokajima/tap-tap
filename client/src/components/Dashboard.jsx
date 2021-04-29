@@ -7,7 +7,7 @@ import { Avatar } from "@material-ui/core";
 import { selectUser, selectStore, login, logout } from "../features/userSlice";
 import { setCurrentBeer, setBeerList, selectCurrentBeer, selectBeerList, toggleIsModalOpen ,setAndShowModal } from "../features/beerSlice";
 import "./styles/Dashboard.styles.scss";
-import { PrimaryButton, PrimaryCard, DashboardSide, DashboardFriendsTaps, DashboardMyTaps, DashboardFavorites, DashboardUntapped } from "./UIkit/index";
+import { PrimaryButton, PrimaryCard, DashboardSide, DashboardFriendsTaps, DashboardMyTaps, DashboardFavorites, DashboardUntapped, Hamburger } from "./UIkit/index";
 import {DashboardContainer, ContentContainer} from './styles/Dashboard.styles'
 import {BeerModal} from './UIkit/index'
 
@@ -75,6 +75,7 @@ const Dashboard = () => {
         </Switch>
         <BeerModal />
 
+        <Hamburger user={user} />
 
         
       {/* </ContentContainer> */}

@@ -32,4 +32,8 @@ const MyButton = styled(Button)`
     background-color: white;
     border: 1px solid #d2a708;
   }
+
+  @media {
+    width: 130px;
+  }
 `;

@@ -31,9 +31,6 @@ const DashboardSide = ({imageUrl, user}) => {
     <SidebarContainer>
       {/* <div className="sidebar-profile"> */}
       <SidebarProfile>
-
-        {/* <Avatar className="profile-image" alt="profile" src={imageUrl} /> */}
-        {/* <span className="profile-name"> */}
           {user?.firstName} {user?.lastName}
         {/* </span> */}
       </SidebarProfile>

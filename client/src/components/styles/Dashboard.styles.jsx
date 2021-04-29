@@ -5,11 +5,16 @@ export const DashboardContainer = styled.div`
   width: 100%;
 `
 
+
 export const ContentContainer = styled.div`
   background-color: #faebd7;
   width: 75vw;
   height: 96vh;
   padding: 2vh 3vw;
+
+  @media (max-width: 800px) {
+    width: 100vw;
+  }
 `
 
 export const ContentTitle = styled.div`
@@ -42,6 +47,15 @@ export const BeerListItem = styled.div`
       }
     }
   }
+
+  @media (max-width: 800px) {
+    width: 40vw;
+  }
+  
+  @media (max-width: 450px) {
+    width: 80vw;
+    height: 30vh;
+  }
 `
 
 
@@ -64,6 +78,10 @@ export const SidebarContainer = styled.div`
       }
       & .profile-name {
       }
+    }
+
+    @media (max-width: 800px) {
+      display: none;
     }
 `
 
