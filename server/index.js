@@ -202,85 +202,118 @@ app.get("/beerData", (req, res) => {
   const uid = req.session.uid
   console.log("this is beerData");
 
-  pool.connect((errPool, db) => {
-    console.log("IN POOL");
-    db.query(
-      // "SELECT * FROM beers inner join users on beers.user_id = users.id where users.id = $1",
-      // "SELECT * FROM beers right outer join users on beers.user_id = users.id where users.id = $1;",
-      "SELECT * FROM users inner join beers on beers.user_id = users.id where users.id = $1;",
-      [uid],
-      (errSelect, results) => {
-        if (errSelect) {
-          console.log("ERROR IN SELECT");
-          console.log(errSelect);
-        } else {
-          console.log("SELECTED!");
-          res.send(results.rows)
+  if (req.session.uid) {
+    console.log("IN IF");
+    // pool.connect((errPool, db) => {
+      console.log("IN POOL");
+      // db.query(
+      pool.query(
+        // "SELECT * FROM beers inner join users on beers.user_id = users.id where users.id = $1",
+        // "SELECT * FROM beers right outer join users on beers.user_id = users.id where users.id = $1;",
+        "SELECT * FROM users inner join beers on beers.user_id = users.id where users.id = $1;",
+        [uid],
+        (errSelect, results) => {
+          if (errSelect) {
+            console.log("ERROR IN SELECT");
+            console.log(errSelect);
+          } else {
+            console.log("SELECTED!");
+            res.send(results.rows)
+          }
         }
-      }
-    )
-  })
+      )
+    // })
+  } else {
+    console.log("IN ELSE");
+    res.end()
+  }
 })
 
 app.get("/allBeerData", (req, res) => {
   const uid = req.session.uid
   console.log("this is allBeerData");
-  pool.connect((errPool, db) => {
-    console.log("IN POOL");
-    db.query(
-      "SELECT * FROM beers WHERE user_id != $1",
-      [uid],
-      (errSelect, results) => {
-        if (errSelect) {
-          console.log("ERROR IN SELECT");
-        } else {
-          console.log("SELECTED!");
-          res.send(results.rows)
+  if (req.session.uid) {
+    console.log("IN IF");
+    // pool.connect((errPool, db) => {
+    //   console.log("IN POOL");
+      // db.query(
+      pool.query(
+        "SELECT * FROM beers WHERE user_id != $1",
+        [uid],
+        (errSelect, results) => {
+          if (errSelect) {
+            console.log("ERROR IN SELECT");
+          } else {
+            console.log("SELECTED!");
+            res.send(results.rows)
+            
+          }
         }
-      }
-    )
-  })
+      )
+    // })
+  } else {
+    console.log("IN ELSE");
+    res.end()
+  }
 })
 
 app.get("/favoriteBeerData", (req, res) => {
   const uid = req.session.uid
   console.log("this is favoriteBeerData");
 
-  pool.connect((errPool, db) => {
-    console.log("IN POOL");
-    db.query(
-      "SELECT * FROM beers where user_id = $1 AND favorite = true",
-      [uid],
-      (errSelect, results) => {
-        if (errSelect) {
-          console.log("ERROR IN SELECT");
-        } else {
-          console.log("SELECTED!");
-          res.send(results.rows)
+  if (req.session.uid) {
+    console.log("IN IF");
+    // pool.connect((errPool, db) => {
+    //   console.log("IN POOL");
+      // db.query(
+      pool.query(
+        "SELECT * FROM beers where user_id = $1 AND favorite = true",
+        [uid],
+        (errSelect, results) => {
+          if (errSelect) {
+            console.log("ERROR IN SELECT");
+          } else {
+            console.log("SELECTED!");
+            res.send(results.rows)
+            
+
+          }
         }
-      }
-    )
-  })
+      )
+    // })
+  } else {
+    console.log("IN ELSE");
+    res.end()
+  }
 })
 
 app.get("/untappedBeerData", (req, res) => {
   const uid = req.session.uid
   console.log("this is untappedBeerData");
-  pool.connect((errPool, db) => {
-    console.log("IN POOL");
-    db.query(
-      "SELECT * FROM beers where user_id = $1 AND untapped = true",
-      [uid],
-      (errSelect, results) => {
-        if (errSelect) {
-          console.log(errSelect);
-        } else {
-          console.log("SELECTED!");
-          res.send(results.rows)
+  if (req.session.uid) {
+    console.log("IN IF");
+    // pool.connect((errPool, db) => {
+    //   console.log("IN POOL");
+    //   db.query(
+      pool.query(
+        "SELECT * FROM beers where user_id = $1 AND untapped = true",
+        [uid],
+        (errSelect, results) => {
+          if (errSelect) {
+            console.log(errSelect);
+          } else {
+            console.log("SELECTED!");
+            res.send(results.rows)
+            
+
+          }
         }
-      }
-    )
-  })
+      )
+    // })
+  } else {
+    console.log("IN ELSE");
+    res.end()
+  }
 })
 // ----------------------/GET BEER DATA----------------------
 
@@ -296,9 +329,10 @@ app.post("/updateBeerData", (req, res) => {
 
 
   if (req.body.id) {
-    pool.connect((errConnect, db) => {
-      console.log("IN POOL");
-      db.query(
+    // pool.connect((errConnect, db) => {
+    //   console.log("IN POOL");
+    //   db.query(
+      pool.query(
         "update beers set (name, brewery, style, memo, untapped) = ($1, $2, $3, $4, $5) where id = $6",
         [name, brewery, style, memo, untapped, id],
         (errUpdate, result) => {
@@ -311,7 +345,7 @@ app.post("/updateBeerData", (req, res) => {
           }
         }
       )
-    })
+    // })
   } else {
     res.send({noRes: true})
   }
@@ -323,9 +357,11 @@ app.post("/toggleFavorite", (req, res) => {
   console.log("this is toggle favorite");
 
   if (req.session.uid) {
-    pool.connect((errPool, db) => {
-      console.log("IN POOL");
-      db.query(
+    console.log("IN IF");
+    // pool.connect((errPool, db) => {
+    //   console.log("IN POOL");
+    //   db.query(
+      pool.query(
         "UPDATE beers set favorite = $1 where id = $2",
         [favorite, id],
         (errUpdate, result) => {
@@ -337,8 +373,9 @@ app.post("/toggleFavorite", (req, res) => {
           }
         }
       )
-    })
+    // })
   } else {
+    console.log("IN ELSE");
     res.end()
   }
 })
@@ -349,9 +386,11 @@ app.post("/deleteItem", (req, res) => {
   console.log(id);
 
   if (req.session.uid) {
-    pool.connect((errPool, db) => {
-      console.log("IN POOL");
-      db.query(
+    console.log("IN IF");
+    // pool.connect((errPool, db) => {
+    //   console.log("IN POOL");
+    //   db.query(
+      pool.query(
         "DELETE FROM beers where id = $1",
         [id],
         (errDelete, result) => {
@@ -363,8 +402,9 @@ app.post("/deleteItem", (req, res) => {
           }
         }
       )
-    })
+    // })
   } else {
+    console.log("IN ELSE");
     res.end()
   }
   // res.end()
@@ -386,9 +426,10 @@ app.post("/addBeer", (req, res) => {
 
   if (req.session.uid) {
     console.log("IN IF");
-    pool.connect((errPool, db) => {
-      console.log("IN POOL");
-      db.query(
+    // pool.connect((errPool, db) => {
+    //   console.log("IN POOL");
+    //   db.query(
+      pool.query(
         "INSERT INTO beers (user_id, name, brewery, style, memo, untapped, favorite) VALUES ($1, $2, $3, $4, $5, true, false)",
         [userId, name, brewery, style, memo],
         (errInsert, result) => {
@@ -400,7 +441,7 @@ app.post("/addBeer", (req, res) => {
           }
         }
       )
-    })
+    // })
   } else {
     res.end()
   }
@@ -421,9 +462,11 @@ app.post("/addToMine", (req, res) => {
   // memo: 'Ligid',
   // untapped: true
   if (req.session.uid) {
-    pool.connect((errPool, db) => {
-      console.log("IN POOL");
-      db.query(
+    console.log("IN IF");
+    // pool.connect((errPool, db) => {
+    //   console.log("IN POOL");
+    //   db.query(
+      pool.query(
         "INSERT INTO beers (user_id, name, brewery, style, memo, untapped, favorite) VALUES ($1, $2, $3, $4, $5, true, false)",
         [userId, name, brewery, style, memo],
         (errInsert, result) => {
@@ -435,8 +478,9 @@ app.post("/addToMine", (req, res) => {
           }
         }
       )
-    })
+    // })
   } else {
+    console.log("IN ELSE");
     res.end()
   }
 })
