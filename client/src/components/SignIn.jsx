@@ -18,8 +18,9 @@ const SignIn = () => {
     setError("")
     axios.get('/signin').then((response) => {
       // if (response.data.length < 50) {
-      if (response.data.erro) {
-        setError(response.data)
+      if (response.data.error) {
+        console.log(response.data.error);
+        setError(response.data.error)
       }
     })
 

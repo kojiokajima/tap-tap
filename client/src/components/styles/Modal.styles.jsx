@@ -8,7 +8,6 @@ export const DialogContainer = styled(Dialog)`
     align-items: center;
     margin-bottom: 10px;
 
-    
 
     & .MuiGrid-spacing-xs-1 > * {
       width: 90%;

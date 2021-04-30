@@ -34,6 +34,6 @@ const MyButton = styled(Button)`
   }
 
   @media (max-width: 800px) {
-    width: 180px;
+    width: 120px;
   }
 `;

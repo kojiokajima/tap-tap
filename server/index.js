@@ -66,7 +66,11 @@ app.post('/signin', (req, res) => {
             console.log("ERROR IN SELECT");
             console.log(err);
           }
-          if (!result.rows.length) {
+          if (!(email && password)) {
+            console.log("SOME INPUT IS BLANK");
+            req.session.error = "Please fill in all fields"
+            res.redirect('/signin')
+          } else if (!result.rows.length) {
             console.log("NO USER EXIST FOR THIS EMAIL");
             req.session.error = "No user exist for this email"
             res.redirect('/signin')
