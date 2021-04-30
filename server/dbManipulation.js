@@ -13,6 +13,3 @@
 
 
 // insert into beers (user_id, name, brewery, style, memo, untapped) values (4, 'Johns Brown', 'Devil Craft', 'Amber Ale', 'Pretty Good', true);
-
-
-// ---

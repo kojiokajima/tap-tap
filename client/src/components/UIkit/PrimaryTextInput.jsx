@@ -58,8 +58,3 @@ const MyTextField = styled(TextField)`
     }
   }
 `;
-
-// inputのiconに使うのは、、、
-// AccountCircle or Person or PersonOutlineIcon
-// MailOutlineIcon
-// VpnKeyIcon

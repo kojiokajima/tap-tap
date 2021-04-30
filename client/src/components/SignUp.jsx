@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
-import { PrimaryButton, PrimaryTextInput } from "../components/UIkit";
 import { Link } from "react-router-dom";
-import {SignInOutContainer, SignInOutHero, SignInOutForm, ErrorMessage} from './styles/SignInOut.styles'
 import axios from 'axios';
 
+import {SignInOutContainer, SignInOutHero, SignInOutForm, ErrorMessage} from './styles/SignInOut.styles'
+import { PrimaryButton, PrimaryTextInput } from "../components/UIkit";
 
 const SignUp = () => {
   const [error, setError] = useState("");

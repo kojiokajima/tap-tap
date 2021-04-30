@@ -50,9 +50,6 @@ export const BeerListItem = styled.div`
     }
     & .MuiCardContent-root {
       height: 100%;
-      & > * {
-      // font-size: 2vw;
-      }
     }
   }
 
@@ -77,7 +74,6 @@ export const SidebarContainer = styled.div`
     &-profile {
       display: flex;
       align-items: center;
-      // justify-content: space-around;
       justify-content: center;
       margin-bottom: 5vh;
 
@@ -94,10 +90,6 @@ export const SidebarContainer = styled.div`
 `
 
 export const SidebarProfile = styled.div`
-  // display: flex;
-  // align-items: center;
-  // justify-content: space-around;
-  // justify-content: center;
   color: #401F01;
   margin-bottom: 5vh;
   font-size: 140%;

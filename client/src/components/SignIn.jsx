@@ -8,50 +8,24 @@ import {SignInOutContainer, SignInOutHero, SignInOutForm, ErrorMessage} from './
 import { selectUser, selectStore} from '../features/userSlice'
 
 const SignIn = () => {
-  const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
   const user = useSelector(selectUser)
   const store = useSelector(selectStore)
 
   useEffect(() => {
-    // console.log("USE EFFECT IN SIGNIN EVOKED");
     setError("")
     axios.get('/signin').then((response) => {
-      // if (response.data.length < 50) {
       if (response.data.error) {
-        console.log(response.data.error);
         setError(response.data.error)
       }
     })
-
-    // axios.get("/userAuth").then((response) => {
-    //   console.log("THIS IS RES ", response.data);
-    //   if (response.data.loggedIn) {
-    //     // console.log(response.data);
-    //     dispatch(
-    //       login({
-    //         uid: response.data.uid,
-    //         firstName: response.data.firstName,
-    //         lastName: response.data.lastName,
-    //         email: response.data.email,
-    //       })
-    //     );
-    //   } else {
-    //     dispatch(logout()) // -> delete currentUser from store
-    //   }
-    // });
-
-
-    console.log("SELECT USER IS ", user);
-    console.log("SELECT STORE IS ", store);
-    
   }, [dispatch]);
 
 // if (!user?.loggedIn) {
   return (
     <SignInOutContainer>
       <SignInOutHero></SignInOutHero>
-
       <SignInOutForm>
         <form action="/signin" method="post">
           <ErrorMessage>{error}</ErrorMessage>
@@ -68,9 +42,5 @@ const SignIn = () => {
     </SignInOutContainer>
   );
 }
-// else {
-//   <Redirect to="/dashboard" />
-// }
-// };
 
 export default SignIn;
