@@ -20,6 +20,11 @@ export const ContentContainer = styled.div`
 export const ContentTitle = styled.div`
   margin: 2vh 0;
   color:  #401F01;
+  font-size: 4vw;
+
+  @media (max-width: 800px) {
+    font-size: 6vw;
+  }
 `
 export const BeerListContainer = styled.div`
   width: 100%;
@@ -27,6 +32,9 @@ export const BeerListContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   overflow: scroll;
+  @media (max-width: 550px) {
+    justify-content: space-around;
+  }
 `
 
 export const BeerListItem = styled.div`
@@ -41,7 +49,7 @@ export const BeerListItem = styled.div`
       height: 50%;
     }
     & .MuiCardContent-root {
-      height: 50%;
+      height: 100%;
       & > * {
       // font-size: 2vw;
       }
@@ -49,10 +57,10 @@ export const BeerListItem = styled.div`
   }
 
   @media (max-width: 800px) {
-    width: 40vw;
+    width: 43vw;
   }
   
-  @media (max-width: 450px) {
+  @media (max-width: 550px) {
     width: 80vw;
     height: 30vh;
   }

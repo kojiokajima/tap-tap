@@ -1,16 +1,10 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Switch, Route } from "react-router-dom";
-import axios from "axios";
 
 import "./App.css";
-import { selectUser } from "./features/userSlice";
 import { Dashboard, SignIn, SignUp } from "./components/index";
-import { login, logout } from "./features/userSlice";
 
 function App() {
-  const dispatch = useDispatch();
-  const user = useSelector(selectUser);
 
   useEffect(() => {
     // axios.get("/userAuth").then((response) => {

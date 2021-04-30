@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Icon, Grid } from "@material-ui/core";
+import { TextField, Grid } from "@material-ui/core";
 import { PersonOutline, MailOutline, LockOutlined } from "@material-ui/icons";
 import styled from "styled-components";
 
-const PrimaryTextInput = ({ icon = "", label, name, type = "", disabled=false, value="", rows=1 }) => {
+const PrimaryTextInput = ({ icon = "", label, name, type = "", disabled=false, defaultValue="", rows=1 }) => {
   const [iconComponent, setIconComponent] = useState(<></>);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const PrimaryTextInput = ({ icon = "", label, name, type = "", disabled=false, v
       <Grid item style={{ width: "70%" }}>
         {
           disabled ?
-          <MyTextField label={label} name={name} type={type} value={value} rows={rows} disabled />
+          <MyTextField label={label} name={name} type={type} defaultValue={defaultValue} rows={rows} disabled />
           :
           <MyTextField label={label} name={name} type={type} rows={rows} />
         }

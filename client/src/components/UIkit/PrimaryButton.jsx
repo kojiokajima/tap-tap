@@ -26,14 +26,14 @@ const MyButton = styled(Button)`
   background-color: #d2a708;
   color: white;
   // width: 150px;
-  width: 17vw;
+  width: 16vw;
   &:hover {
     color: #d2a708;
     background-color: white;
     border: 1px solid #d2a708;
   }
 
-  @media {
-    width: 130px;
+  @media (max-width: 800px) {
+    width: 180px;
   }
 `;

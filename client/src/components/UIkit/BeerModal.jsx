@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogActions } from "@material-ui/core";
+import { DialogContent, DialogActions } from "@material-ui/core";
 import { FavoriteBorder, Favorite } from "@material-ui/icons";
-import { useHistory } from "react-router-dom";
 import { PrimaryButton, PrimaryTextInput } from "./index";
-import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import {DialogContainer} from '../styles/Modal.styles'
@@ -18,7 +16,6 @@ import { selectUser } from "../../features/userSlice";
 
 const BeerModal = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const isModalOpen = useSelector(selectIsModalOpen);
   const currentBeer = useSelector(selectCurrentBeer);
   const currentUser = useSelector(selectUser);
@@ -29,26 +26,43 @@ const BeerModal = () => {
 
   const toggleDisabled = () => { // --> こっちが先に動いてからタイプの判定がくるのか
 
+    // if (!isEdit) {
+    //   console.log("AXIOS");
+    //   axios.post("/updateBeerData").then(() => {
+    //     setIsDisabled(!isDisabled);
+    //     setIsEdit(!isEdit);
+    //     window.location.reload()
+    //   });
+    // } else {
+    //   console.log("NOT AXIOS");
+    //   setIsDisabled(!isDisabled);
+    //   setIsEdit(!isEdit);
+    // }
+
     axios.post("/updateBeerData").then((response) => {
       setIsDisabled(!isDisabled);
       setIsEdit(!isEdit);
-    });
+      if (!response.noRes) {
+        console.log(response.data);
+      } else {
+        window.location.reload()
+      }
+    })
   };
 
-  // console.log("ID MATCH? ", currentBeer?.userId, " ", currentUser?.uid);
-  console.log("currentUntapped ", currentUntapped);
-  console.log("currentBeer.untapped ", currentBeer.untapped);
-
   const closeModal = () => {
+    setIsEdit(true)
+    setIsDisabled(true)
     dispatch(toggleIsModalOpen());
   };
 
   const deleteItem = () => {
+    console.log(currentBeer);
     axios
       .post("/deleteItem", {
         ...currentBeer,
       })
-      .then((response) => {
+      .then(() => {
         window.location.reload();
       });
   };
@@ -59,7 +73,7 @@ const BeerModal = () => {
         ...currentBeer,
         currentUserId: currentUser.uid,
       })
-      .then((response) => {
+      .then(() => {
         window.location.reload();
       });
   };
@@ -70,7 +84,7 @@ const BeerModal = () => {
   };
 
   const toggleFavorite = () => {
-    console.log("HI TOGGLE FAVORITE");
+    // console.log("HI TOGGLE FAVORITE");
     setCurrentFavorite(!currentFavorite)
     axios.post("/toggleFavorite", {
       ...currentBeer,
@@ -98,12 +112,14 @@ const BeerModal = () => {
     >
       {/* <DialogTitle id="alert-dialog-title">[]</DialogTitle> */}
       <form action="/updateBeerData" method="post">
+      {/* <form action={!isEdit ? "" : "/updateBeerData" } method="post"> */}
+      {/* <form> */}
       {/* <DialogForm action="/updateBeerData" method="post"> */}
         <DialogContent>
           <div className="dialog-form" style={{ display: "none" }}>
             <PrimaryTextInput
               icon={""}
-              value={currentBeer.id}
+              defaultValue={currentBeer.id}
               label={""}
               name={"id"}
               type={""}
@@ -115,7 +131,7 @@ const BeerModal = () => {
             {/* <PrimaryTextInput icon={""} value={currentBeer.name} label={""} name={"name"} type={""} disabled={isDisabled} /> */}
             <PrimaryTextInput
               icon={""}
-              value={`${currentBeer.name}`}
+              defaultValue={`${currentBeer.name}`}
               label={""}
               name={"name"}
               type={""}
@@ -126,7 +142,7 @@ const BeerModal = () => {
             <label htmlFor="">Brewery</label>
             <PrimaryTextInput
               icon={""}
-              value={currentBeer.brewery}
+              defaultValue={currentBeer.brewery}
               label={""}
               name={"brewery"}
               type={""}
@@ -137,7 +153,7 @@ const BeerModal = () => {
             <label htmlFor="">Style</label>
             <PrimaryTextInput
               icon={""}
-              value={currentBeer.style}
+              defaultValue={currentBeer.style}
               label={""}
               name={"style"}
               type={""}
@@ -148,7 +164,7 @@ const BeerModal = () => {
             <label htmlFor="">Memo</label>
             <PrimaryTextInput
               icon={""}
-              value={currentBeer.memo}
+              defaultValue={currentBeer.memo}
               label={""}
               name={"memo"}
               type={""}
@@ -170,7 +186,7 @@ const BeerModal = () => {
             <input
               type="text"
               name="untrapped"
-              value={currentUntapped}
+              defaultValue={currentUntapped}
               style={{ display: "none" }}
             />
             {
@@ -180,7 +196,6 @@ const BeerModal = () => {
                 <Favorite style={{color: "red"}} onClick={toggleFavorite} />
               :
                 <FavoriteBorder onClick={toggleFavorite} />
-
               :
               null
             }

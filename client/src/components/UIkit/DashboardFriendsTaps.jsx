@@ -11,9 +11,11 @@ const DashboardFriendsTaps = ({showModal}) => {
   const beerList = useSelector(selectBeerList);
 
   useEffect(() => {
+    console.log("---------FRIENDS USE EFFECT---------");
     axios.get("/allBeerData").then((response) => {
       // console.log("RESPONSE(/allBeerData)", response.data);
       // dispatch(setBeerList(response.data))
+      console.log(response.data);
       dispatch(setBeerList(response.data));
       // console.log("beer list is ", beerList);
     });

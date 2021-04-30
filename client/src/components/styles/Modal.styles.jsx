@@ -8,6 +8,8 @@ export const DialogContainer = styled(Dialog)`
     align-items: center;
     margin-bottom: 10px;
 
+    
+
     & .MuiGrid-spacing-xs-1 > * {
       width: 90%;
     }
@@ -15,11 +17,26 @@ export const DialogContainer = styled(Dialog)`
 
   & .MuiDialogActions-root {
     justify-content: space-around;
+
+    @media (max-width: 550px) {
+      flex-direction: column;
+      & > * {
+        margin-top: 20px;
+      }
+      
+    }
+
   }
 
   & .MuiDialog-paperWidthSm {
     width: 60vw;
     height: 60vh;
+    justify-content: space-around;
+
+    @media (max-width: 550px) {
+      width: 90vw;
+      height: 80vh;
+    }
 
     & .MuiDialogContent-root {
       & label {

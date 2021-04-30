@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import {DashboardSide} from './index'
 // import {SidebarProfileHam, SidebarContainerHam} from './index'
 import styled from "styled-components";
@@ -24,12 +24,17 @@ const Hamburger = ({ user }) => {
 
   const switchDashboard = (linkName) => {
     console.log("USERREF IS ", userRef);
+    toggleDrawer()
     history.push(`/dashboard/${userRef.uid}/${linkName}`);
   };
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
+
+  useEffect(() => {
+    setIsDrawerOpen(false)
+  }, [])
 
   return (
     <HamburgerContainer>
