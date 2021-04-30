@@ -32,7 +32,7 @@ const DashboardSide = ({user}) => {
     <SidebarContainer>
       {/* <div className="sidebar-profile"> */}
       <SidebarProfile>
-          {user?.firstName} {user?.lastName}
+          {`${user?.firstName} ${user?.lastName}`}
         {/* </span> */}
       </SidebarProfile>
       {/* </div> */}

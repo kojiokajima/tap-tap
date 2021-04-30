@@ -100,6 +100,7 @@ export const SidebarProfile = styled.div`
   // justify-content: center;
   color: #401F01;
   margin-bottom: 5vh;
+  font-size: 140%;
 `
 
 export const SidebarButtons = styled.div`
