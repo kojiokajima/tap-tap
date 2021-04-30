@@ -1,32 +1,32 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { selectBeerList, setBeerList } from "../../features/beerSlice";
-import { PrimaryCard } from "./index";
+import { useDispatch, useSelector } from "react-redux";
 
+import { PrimaryCard } from "./index";
+import { setBeerList, selectBeerList} from '../../features/beerSlice'
 import {ContentContainer, ContentTitle, BeerListContainer, BeerListItem} from '../styles/Dashboard.styles'
 
-const DashboardFriendsTaps = ({showModal}) => {
-  const dispatch = useDispatch();
+
+const DashboardUntapped = ({showModal}) => {
   const beerList = useSelector(selectBeerList);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("---------FRIENDS USE EFFECT---------");
-    axios.get("/allBeerData").then((response) => {
-      // console.log("RESPONSE(/allBeerData)", response.data);
-      // dispatch(setBeerList(response.data))
+    console.log("---------UNTAPPED USE EFFECT---------");
+    axios.get("/untappedBeerData").then((response) => {
+      // --> user's beer list
+      // console.log("RESPONSE(/beerData) ", response.data);
       console.log(response.data);
       dispatch(setBeerList(response.data));
-      // console.log("beer list is ", beerList);
+      // console.log("BEER LIST IS ", beerList);
     });
   }, []);
 
   return (
-    // <div>
     <ContentContainer>
 
       {/* <h2 className="dashboard-title">My Taps</h2> */}
-      <ContentTitle>Friends' Taps</ContentTitle>
+      <ContentTitle>Untapped</ContentTitle>
       {/* <div className="beerlist-container"> */}
       <BeerListContainer>
 
@@ -46,4 +46,4 @@ const DashboardFriendsTaps = ({showModal}) => {
   );
 };
 
-export default DashboardFriendsTaps;
+export default DashboardUntapped;

@@ -1,36 +1,47 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setBeerList, selectBeerList } from "../../features/beerSlice";
 
 import { PrimaryCard } from "./index";
+import { setBeerList, selectBeerList } from '../../features/beerSlice'
+import {ContentContainer, ContentTitle, BeerListContainer, BeerListItem} from '../styles/Dashboard.styles'
 
-const DashboardMyTaps = (props) => {
-  console.log("PROPS.BEERLIST ", props.beerList);
+const DashboardMyTaps = ({showModal}) => {
   const beerList = useSelector(selectBeerList);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log("---------MY USE EFFECT---------");
     axios.get("/beerData").then((response) => {
       // --> user's beer list
-      console.log("RESRES ", response.data);
+      console.log(response.data);
       dispatch(setBeerList(response.data));
-      console.log("BEER LIST IS ", beerList);
+      // console.log("BEER LIST IS ", beerList);
     });
   }, []);
 
   return (
-    <div>
-      <h2 className="dashboard-title">My Taps</h2>
-      <div className="beerlist-container">
-        {beerList.length > 1 &&
+    // <div>
+    <ContentContainer>
+
+      {/* <h2 className="dashboard-title">My Taps</h2> */}
+      <ContentTitle>My Taps</ContentTitle>
+      {/* <div className="beerlist-container"> */}
+      <BeerListContainer>
+
+        {beerList.length > 0 &&
           beerList.map((beerItem, index) => (
-            <div className="beerlist-item" key={index}>
-              <PrimaryCard {...beerItem} />
-            </div>
+            // <div className="beerlist-item" key={index}>
+            <BeerListItem key={index}>
+              {/* <PrimaryCard {...beerItem} onClick={() => showModal(beerItem)} /> */}
+              <PrimaryCard {...beerItem} onClick={() => showModal(beerItem)} />
+            {/* </div> */}
+            </BeerListItem>
           ))}
-      </div>
-    </div>
+      {/* </div> */}
+      </BeerListContainer>
+    {/* </div> */}
+    </ContentContainer>
   );
 };
 

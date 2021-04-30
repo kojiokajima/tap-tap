@@ -33,15 +33,15 @@ const SignUp = () => {
           <ErrorMessage>{error}</ErrorMessage>
 
           <PrimaryTextInput icon={"name"} label={"First Name"} name={"firstName"} />
-          <br/><br/>
+          <br/>
           <PrimaryTextInput icon={"name"} label={"Last Name"} name={"lastName"} />
-          <br/><br/>
+          <br/>
           <PrimaryTextInput icon={"email"} label={"Email"} name={"email"} />
-          <br/><br/>
+          <br/>
           <PrimaryTextInput icon={"password"} label={"Password"} name={"password"} type={"password"} />
-          <br/><br/>
+          <br/>
           <PrimaryTextInput icon={"password"} label={"Confirm Password"} name={"confirmPassword"} type={"password"} />
-          <br/><br/><br/><br/>
+          <br/><br/>
           <PrimaryButton label={"Sign Up"} />
           <br/><br/>
           <Link to="/signin" >already have an account?</Link>

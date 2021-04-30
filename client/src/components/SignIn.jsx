@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {useDispatch, useSelector} from 'react-redux'
-import Hero from "../assets/hero01.JPG";
-import { Link, Redirect } from "react-router-dom";
+
+import { Link } from "react-router-dom";
 import axios from 'axios'
 import { PrimaryButton, PrimaryTextInput } from "../components/UIkit";
 import {SignInOutContainer, SignInOutHero, SignInOutForm, ErrorMessage} from './styles/SignInOut.styles'
-import {login, logout, selectUser, selectStore} from '../features/userSlice'
+import { selectUser, selectStore} from '../features/userSlice'
 
 const SignIn = () => {
   const [error, setError] = useState("");
