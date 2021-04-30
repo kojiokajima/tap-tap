@@ -1,25 +1,11 @@
+import { CardActionArea, CardContent, Typography } from "@material-ui/core";
 import styled from "styled-components";
-import {
-  CardActionArea,
-  CardContent,
-  Typography,
-} from "@material-ui/core";
 
 const PrimaryCard = ({ name, brewery, style, onClick }) => {
 
   return (
     <MyCardActionArea onClick={onClick}>
-      {/* <CardMedia
-        component="img"
-        alt="Contemplative Reptile"
-        height="140"
-        image={imageUrl}
-        title="Contemplative Reptile"
-      /> */}
       <MyCardContent>
-        {/* <Typography gutterBottom variant="h5" component="h2">
-          Lizard
-        </Typography> */}
         <MyTypography>{name}</MyTypography>
         <MyTypography>{style}</MyTypography>
         <MyTypography>{brewery}</MyTypography>

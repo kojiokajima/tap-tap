@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import Hero from "../../assets/hero.jpg";
 
 export const SignInOutContainer = styled.div`
@@ -47,9 +48,7 @@ export const SignInOutForm = styled.div`
     padding: 10vh 5vw;
     position: relative;
     border: 1px solid #000;
-    // width: 100%;
     height: 80vh;
-    // padding: 5rem;
   }
 
   @media (max-width: 800px) {

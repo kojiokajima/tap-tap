@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { DialogContent, DialogActions } from "@material-ui/core";
 import { FavoriteBorder, Favorite } from "@material-ui/icons";
-import { PrimaryButton, PrimaryTextInput } from "./index";
-import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+
+import { PrimaryButton, PrimaryTextInput } from "./index";
 import {DialogContainer} from '../styles/Modal.styles'
-
-
-import {
-  toggleIsModalOpen,
-  selectIsModalOpen,
-  selectCurrentBeer,
-} from "../../features/beerSlice";
 import { selectUser } from "../../features/userSlice";
+import {　toggleIsModalOpen,　selectIsModalOpen,　selectCurrentBeer } from "../../features/beerSlice";
+
 
 const BeerModal = () => {
   const dispatch = useDispatch();
@@ -24,21 +20,7 @@ const BeerModal = () => {
   const [currentUntapped, setCurrentUntapped] = useState(false);
   const [currentFavorite, setCurrentFavorite] = useState(false)
 
-  const toggleDisabled = () => { // --> こっちが先に動いてからタイプの判定がくるのか
-
-    // if (!isEdit) {
-    //   console.log("AXIOS");
-    //   axios.post("/updateBeerData").then(() => {
-    //     setIsDisabled(!isDisabled);
-    //     setIsEdit(!isEdit);
-    //     window.location.reload()
-    //   });
-    // } else {
-    //   console.log("NOT AXIOS");
-    //   setIsDisabled(!isDisabled);
-    //   setIsEdit(!isEdit);
-    // }
-
+  const toggleDisabled = () => {
     axios.post("/updateBeerData").then((response) => {
       setIsDisabled(!isDisabled);
       setIsEdit(!isEdit);
@@ -57,9 +39,7 @@ const BeerModal = () => {
   };
 
   const deleteItem = () => {
-    console.log(currentBeer);
-    axios
-      .post("/deleteItem", {
+    axios.post("/deleteItem", {
         ...currentBeer,
       })
       .then(() => {
@@ -68,8 +48,7 @@ const BeerModal = () => {
   };
 
   const addToMine = () => {
-    axios
-      .post("/addToMine", {
+    axios.post("/addToMine", {
         ...currentBeer,
         currentUserId: currentUser.uid,
       })
@@ -79,22 +58,17 @@ const BeerModal = () => {
   };
 
   const toggleTapped = () => {
-    // axios.post("/toggleTapped")
     setCurrentUntapped(!currentUntapped);
   };
 
   const toggleFavorite = () => {
-    // console.log("HI TOGGLE FAVORITE");
     setCurrentFavorite(!currentFavorite)
     axios.post("/toggleFavorite", {
       ...currentBeer,
-      // favorite: currentFavorite
     }).then(() => {
       window.location.reload()
     })
   }
-
-  console.log("CURRENT BEER IS ", currentBeer);
 
   useEffect(() => {
     setCurrentUntapped(currentBeer.untapped);
@@ -102,19 +76,13 @@ const BeerModal = () => {
   }, [isModalOpen]);
 
   return (
-    // <Dialog
     <DialogContainer
       open={isModalOpen}
-      // open={false}
       onClose={closeModal}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      {/* <DialogTitle id="alert-dialog-title">[]</DialogTitle> */}
       <form action="/updateBeerData" method="post">
-      {/* <form action={!isEdit ? "" : "/updateBeerData" } method="post"> */}
-      {/* <form> */}
-      {/* <DialogForm action="/updateBeerData" method="post"> */}
         <DialogContent>
           <div className="dialog-form" style={{ display: "none" }}>
             <PrimaryTextInput
@@ -128,7 +96,6 @@ const BeerModal = () => {
           </div>
           <div className="dialog-form">
             <label htmlFor="">Name</label>
-            {/* <PrimaryTextInput icon={""} value={currentBeer.name} label={""} name={"name"} type={""} disabled={isDisabled} /> */}
             <PrimaryTextInput
               icon={""}
               defaultValue={`${currentBeer.name}`}
@@ -222,8 +189,6 @@ const BeerModal = () => {
           </DialogActions>
         )}
       </form>
-      {/* </DialogForm> */}
-      {/* </Dialog> */}
     </DialogContainer>
   );
 };

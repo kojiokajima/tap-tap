@@ -1,11 +1,10 @@
 import React from 'react'
-import {DialogActions, DialogContent} from '@material-ui/core'
 import {useDispatch, useSelector} from "react-redux"
+import {DialogActions, DialogContent} from '@material-ui/core'
 
 import {PrimaryTextInput, PrimaryButton} from './index'
-import {selectIsBlankModalOpen, toggleIsBlankModalOpen} from '../../features/beerSlice'
 import {DialogContainer} from '../styles/Modal.styles'
-import axios from 'axios'
+import {selectIsBlankModalOpen, toggleIsBlankModalOpen} from '../../features/beerSlice'
 
 const BlankModal = () => {
   const dispatch = useDispatch()
@@ -15,12 +14,6 @@ const BlankModal = () => {
     dispatch(toggleIsBlankModalOpen());
   };
 
-  const addBeer = () => {
-    axios.post("/addBeer").then((response) => {
-      window.location.reload()
-    })
-  }
-
   return (
     <DialogContainer
       open={isBlankModalOpen}
@@ -28,21 +21,10 @@ const BlankModal = () => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      {/* <DialogTitle id="alert-dialog-title">[]</DialogTitle> */}
       <form action="/addBeer" method="post">
         <DialogContent>
-          {/* <div className="dialog-form" style={{ display: "none" }}>
-            <PrimaryTextInput
-              icon={""}
-              value={""}
-              label={""}
-              name={"id"}
-              type={""}
-            />
-          </div> */}
           <div className="dialog-form">
             <label htmlFor="">Name</label>
-            {/* <PrimaryTextInput icon={""} value={currentBeer.name} label={""} name={"name"} type={""} disabled={isDisabled} /> */}
             <PrimaryTextInput
               icon={""}
               defaultValue={""}
@@ -89,7 +71,6 @@ const BlankModal = () => {
           <PrimaryButton label={"Close"} type="button" onClick={closeModal} />
         </DialogActions>
       </form>
-      {/* </Dialog> */}
     </DialogContainer>
   )
 }

@@ -40,11 +40,7 @@ export const beerSlice = createSlice({
     setAndShowModal: (state, action) => {
       setCurrentBeer(state, action)
       toggleIsModalOpen(state, action)
-      console.log("Hi This Is Me");
     },
-    test: (state, action) => {
-      console.log("TEST DISPATCH");
-    }
   }
 })
 
@@ -53,6 +49,6 @@ export const selectBeerList = (state) => state.beer.beerList
 export const selectIsModalOpen = (state) => state.beer.isModalOpen
 export const selectIsBlankModalOpen = (state) => state.beer.isBlankModalOpen
 
-export const {setBeerList, setCurrentBeer, toggleIsModalOpen, toggleIsBlankModalOpen, setAndShowModal, test} = beerSlice.actions
+export const {setBeerList, setCurrentBeer, toggleIsModalOpen, toggleIsBlankModalOpen, setAndShowModal } = beerSlice.actions
 
 export default beerSlice.reducer
