@@ -5,7 +5,7 @@ import axios from "axios";
 
 import { selectUser, login, logout } from "../features/userSlice";
 import { setCurrentBeer, selectBeerList, toggleIsModalOpen} from "../features/beerSlice";
-import "./styles/Dashboard.styles.scss";
+// import "./styles/Dashboard.styles.scss";
 import { DashboardSide, DashboardFriendsTaps, DashboardMyTaps, DashboardFavorites, DashboardUntapped, Hamburger } from "./UIkit/index";
 import {DashboardContainer} from './styles/Dashboard.styles'
 import {BeerModal} from './UIkit/index'
