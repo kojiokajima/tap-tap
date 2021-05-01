@@ -11,8 +11,10 @@ const SignUp = () => {
   useEffect(() => {
     setError("")
     axios.get("/signup").then((response) => {
-      if (response.data.length < 50) {
-        setError(response.data)
+      console.log(response);
+      if (response.data.error) {
+        // setError(response.data)
+        setError(response.data.error)
       }
     })
   }, [])

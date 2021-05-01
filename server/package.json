@@ -1,5 +1,5 @@
 {
-  "proxy": ["http://localhost:3000", "https://tap--tap.herokuapp.com"],
+  "proxy": "http://localhost:3000",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",

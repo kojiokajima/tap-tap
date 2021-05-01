@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, '../client/build')))
 app.use(cors({
-  origin: ["http://localhost:3000", "https://tap--tap.herokuapp.com"],
+  origin: ["http://localhost:3000"],
   methods: ["GET", "POST"],
   credentials: true
 }))
@@ -114,10 +114,6 @@ app.get('/signin', (req, res) => {
     })
   }
 })
-
-app.post('/test', (req, res) => {
-  res.redirect('/signin')
-})
 // ----------------------/SIGN IN----------------------
 
 
@@ -182,7 +178,8 @@ app.post('/signup', (req, res) => {
 })
 
 app.get("/signup", (req, res) => {
-  res.send(req.session.error)
+  // res.send(req.session.error)
+  res.json({error: req.session.error})
 })
 // ----------------------/SIGN UP----------------------
 
