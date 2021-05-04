@@ -15,7 +15,6 @@ const Dashboard = () => {
   const beerList = useSelector(selectBeerList)
 
   const showModal = (beerItem) => {
-    // console.log("BEER ITEM: ", beerItem.user_id); // --> id -> beerItem.id
     dispatch(setCurrentBeer({
       id: beerItem.id,
       userId: beerItem.user_id,
@@ -27,7 +26,6 @@ const Dashboard = () => {
       favorite: beerItem.favorite
     }))
     dispatch(toggleIsModalOpen())
-    // dispatch(test())
   }
 
   useEffect(() => {

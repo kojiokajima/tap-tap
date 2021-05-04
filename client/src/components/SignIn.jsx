@@ -22,7 +22,6 @@ const SignIn = () => {
     })
   }, [dispatch]);
 
-// if (!user?.loggedIn) {
   return (
     <SignInOutContainer>
       <SignInOutHero></SignInOutHero>

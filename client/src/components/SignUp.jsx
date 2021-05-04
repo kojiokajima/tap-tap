@@ -13,7 +13,6 @@ const SignUp = () => {
     axios.get("/signup").then((response) => {
       console.log(response);
       if (response.data.error) {
-        // setError(response.data)
         setError(response.data.error)
       }
     })
@@ -42,7 +41,7 @@ const SignUp = () => {
           <Link to="/signin" >already have an account?</Link>
         </form>
       </SignInOutForm>
-      {/* <PrimaryButton label={"go to sign in"} onClick={test} /> */}
+
     </SignInOutContainer>
   )
 }
