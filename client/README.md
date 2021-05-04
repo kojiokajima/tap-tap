@@ -1,9 +1,9 @@
 ## tap-tap
 
-[deployed link](https://tap--tap.herokuapp.com/signin)
---test user--
-Email: steamworks@mail.com
-Password: test2
+[deployed link](https://tap--tap.herokuapp.com/signin)  
+--test user--  
+Email: steamworks@mail.com  
+Password: test2  
 
 ### Tech Stack
 
