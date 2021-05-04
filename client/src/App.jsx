@@ -11,7 +11,6 @@ function App() {
     <AppContainer>
       <Switch>
         <Route exact path="/" component={SignIn} />
-        <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path="/dashboard/:id" component={Dashboard} />
       </Switch>
