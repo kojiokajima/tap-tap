@@ -15,7 +15,7 @@ const SignIn = () => {
 
   useEffect(() => {
     setError("")
-    axios.get('/signin').then((response) => {
+    axios.get('/login').then((response) => {
       if (response.data.error) {
         setError(response.data.error)
       }
@@ -26,7 +26,7 @@ const SignIn = () => {
     <SignInOutContainer>
       <SignInOutHero></SignInOutHero>
       <SignInOutForm>
-        <form action="/signin" method="post">
+        <form action="/login" method="post">
           <ErrorMessage>{error}</ErrorMessage>
 
           <PrimaryTextInput icon={"email"} label={"Email"} name={"email"} />

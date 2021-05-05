@@ -46,7 +46,7 @@ pool.connect((err, res) => {
 })
 
 // ----------------------SIGN IN----------------------
-app.post('/signin', (req, res) => {
+app.post('/login', (req, res) => {
   const email = req.body.email
   const password = req.body.password
   req.session.error = ""
@@ -102,7 +102,7 @@ app.post('/signin', (req, res) => {
   })
 })
 
-app.get('/signin', (req, res) => {
+app.get('/login', (req, res) => {
   if (req.session.error) {
     res.send({
       error: req.session.error,
@@ -118,7 +118,7 @@ app.get('/signin', (req, res) => {
 
 
 // ----------------------SIGN UP----------------------
-app.post('/signup', (req, res) => {
+app.post('/register', (req, res) => {
   const firstName = req.body.firstName
   const lastName = req.body.lastName
   const email = req.body.email
@@ -177,7 +177,7 @@ app.post('/signup', (req, res) => {
   }
 })
 
-app.get("/signup", (req, res) => {
+app.get("/register", (req, res) => {
   // res.send(req.session.error)
   res.json({error: req.session.error})
 })
