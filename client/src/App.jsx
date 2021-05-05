@@ -10,7 +10,7 @@ function App() {
   return (
     <AppContainer>
       <Switch>
-        <Route exact path="/" component={SignIn} />
+        <Route exact path="/(signin)?" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path="/dashboard/:id" component={Dashboard} />
       </Switch>

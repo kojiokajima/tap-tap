@@ -10,7 +10,7 @@ const SignUp = () => {
 
   useEffect(() => {
     setError("")
-    axios.get("/signup").then((response) => {
+    axios.get("/register").then((response) => {
       console.log(response);
       if (response.data.error) {
         setError(response.data.error)
@@ -23,7 +23,7 @@ const SignUp = () => {
       <SignInOutHero></SignInOutHero>
 
       <SignInOutForm>
-        <form action="/signup" method="post">
+        <form action="/register" method="post">
           <ErrorMessage>{error}</ErrorMessage>
 
           <PrimaryTextInput icon={"name"} label={"First Name"} name={"firstName"} />
